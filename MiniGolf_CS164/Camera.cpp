@@ -3,6 +3,8 @@
 
 #include <glm\gtc\matrix_transform.hpp>
 
+// TODO: Initialize camera! Implement arcball rotation!
+
 Camera::Camera()
 {
 	projection = new glm::mat4;
