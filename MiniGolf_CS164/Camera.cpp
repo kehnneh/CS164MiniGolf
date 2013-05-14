@@ -14,6 +14,7 @@ Camera::Camera()
 void Camera::Init(glm::vec3 eye, glm::vec3 target, glm::vec3 up)
 {
 	*matrix = glm::lookAt(eye, target, up);
+	CreateProjectionMatrix();
 }
 
 Camera::~Camera()

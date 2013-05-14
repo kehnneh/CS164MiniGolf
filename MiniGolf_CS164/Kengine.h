@@ -10,12 +10,12 @@ class Kengine
 private:
 	int windowId;
 
-	Shader *shader;
-
 	void InitGlut(int argc, char** argv);
 	void InitCallbacks();
 
 public:
+	Shader *shader;
+
 	UserInput *userInput;
 	Camera *camera;
 	Level *level;
@@ -28,4 +28,4 @@ public:
 	void Run();
 };
 
-static Kengine *kengine;
+static Kengine *kengine = 0;

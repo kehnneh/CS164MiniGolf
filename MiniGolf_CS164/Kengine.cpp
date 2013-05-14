@@ -26,6 +26,10 @@ void display()
 
 void Tick(int value)
 {
+	// Send new values to the shaders
+	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->camera->GetMatrix());
+	glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->camera->GetProjectionMatrix());
+
 	// Quit the program if the user presses 'ESC'
 	if (kengine->userInput->IsKeyPressed(27))
 	{
@@ -70,7 +74,7 @@ bool Kengine::Init(int argc, char** argv)
 	shader->Enable();
 
 	camera = new Camera;
-	// camera init lol
+	camera->Init(glm::vec3(2.f, 3.f, 2.f), glm::vec3(.0f, .0f, .0f), glm::vec3(.0f, 1.f, .0f));
 
 	userInput = new UserInput;
 
