@@ -1,4 +1,5 @@
 #include "Tile.h"
+#include "Renderable.h"
 
 Tile::Tile()
 {
@@ -68,11 +69,11 @@ void Tile::Finalize()
 	}
 }
 
-void Tile::RenderBorders()
+void Tile::RenderBorders(Camera* c)
 {
 	for (std::vector<Renderable*>::iterator it = borders.begin(); it != borders.end(); ++it)
 	{
-		(*it)->Render();
+		(*it)->Render(c);
 	}
 }
 

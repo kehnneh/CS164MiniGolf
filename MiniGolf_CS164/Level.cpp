@@ -25,13 +25,13 @@ void Level::Render(Camera* camera, Shader* shader)
 	
 	for (std::vector<Renderable*>::iterator it = tiles.begin(); it != tiles.end(); ++it)
 	{
-		(*it)->Render();
-		((Tile*)(*it))->RenderBorders();
+		(*it)->Render(camera);
+		((Tile*)(*it))->RenderBorders(camera);
 	}
 
 	for (std::vector<Renderable*>::iterator it = others.begin(); it != others.end(); ++it)
 	{
-		(*it)->Render();
+		(*it)->Render(camera);
 	}
 }
 

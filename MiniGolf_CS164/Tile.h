@@ -5,6 +5,8 @@
 
 #include <vector>
 
+class Camera;
+
 class Tile : public Renderable
 {
 protected:
@@ -27,6 +29,6 @@ public:
 	bool SetNeighbor(unsigned short edgeId, unsigned short neighborTileId);
 
 	void Finalize();
-	void RenderBorders();
+	void RenderBorders(Camera* c);
 };
 

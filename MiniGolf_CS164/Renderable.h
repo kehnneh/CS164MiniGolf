@@ -6,6 +6,7 @@
 #include <glm\gtx\transform.hpp>
 
 class Shader;
+class Camera;
 
 class Renderable
 {
@@ -36,7 +37,7 @@ public:
 
 	bool Init(glm::vec3* vertData, unsigned int numVerts);
 
-	void Render();
+	void Render(Camera* c);
 	
 	static void BindShader(Shader* s);
 };

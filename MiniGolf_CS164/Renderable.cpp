@@ -1,6 +1,9 @@
 #include "Renderable.h"
 #include "Shader.h"
 #include "CommonUtils.h"
+#include "Camera.h"
+
+#include <glm\gtc\matrix_inverse.hpp>
 
 #define USE_FLAT_SHADING
 
@@ -136,12 +139,11 @@ void Renderable::BindIndices()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GL_UNSIGNED_INT) * indices, indexData, GL_STATIC_DRAW);
 }
 
-void Renderable::Render()
+void Renderable::Render(Camera* c)
 {
 	glUniformMatrix4fv(activeShader->mat_modelTransform, 1, GL_FALSE, (GLfloat*) transform);
 
-	// The following needs to be (transform * camera), not just transform
-	glm::mat3 normalMat = glm::transpose(glm::inverse(glm::mat3(*transform)));
+	glm::mat3 normalMat = glm::inverseTranspose(glm::mat3(*transform * *c->GetMatrix()));
 	glUniformMatrix3fv(activeShader->mat_normal, 1, GL_FALSE, (GLfloat*) &normalMat);
 
 	BindVertices();
