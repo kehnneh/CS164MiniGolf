@@ -83,6 +83,7 @@
     <ClCompile Include="ArcballCamera.cpp" />
     <ClCompile Include="BaseCamera.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FreeLookCamera.cpp" />
     <ClCompile Include="Kengine.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="BaseCamera.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonUtils.h" />
+    <ClInclude Include="FreeLookCamera.h" />
     <ClInclude Include="Kengine.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Renderable.h" />
