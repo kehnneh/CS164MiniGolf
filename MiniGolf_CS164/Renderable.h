@@ -11,12 +11,13 @@ class Camera;
 class Renderable
 {
 protected:
-	// TODO: Need a matrix! If everything is rendered in the same spot it will always overlap itself, distorting the rendered scene.
-
 	unsigned int vertices, indices;
 
-	glm::vec4* colorData;
+	// The matrix doesn't do anything right now, since the vertices are hard coded. Vertices need to be abstracted such that
+	// the transform matrix represents the renderable's orientation. For tiles, the transform matrix should be the center of the tile
 	glm::mat4* transform;
+
+	glm::vec4* colorData;
 	glm::vec3* vertexData;
 	glm::vec3* normalData;
 	unsigned int* indexData;
