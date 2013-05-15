@@ -12,25 +12,30 @@ Camera::Camera()
 	matrix = new glm::mat4;
 }
 
-void Camera::Init(glm::vec3 eye, glm::vec3 target, glm::vec3 up)
-{
-	eyePos = eye;
-	lookAt = target;
-	this->up = up;
-
-	*matrix = glm::lookAt(eye, target, up);
-	CreateProjectionMatrix();
-}
-
 Camera::~Camera()
 {
 	SAFE_DELETE(projection);
 	SAFE_DELETE(matrix);
 }
 
+void Camera::Init(glm::vec3 eye, glm::vec3 target, glm::vec3 up)
+{
+	eyePos = eye;
+	lookAt = target;
+	this->up = up;
+
+	ConstructMatrix();
+	CreateProjectionMatrix();
+}
+
 void Camera::CreateProjectionMatrix()
 {
 	*projection = glm::perspective(45.f, 640.f/480.f, 0.1f, 10000.f);
+}
+
+void Camera::ConstructMatrix()
+{
+	*matrix = glm::lookAt(eyePos, lookAt, up);
 }
 
 void Camera::ArcRotate(float amt, glm::vec3 axis)
@@ -39,7 +44,19 @@ void Camera::ArcRotate(float amt, glm::vec3 axis)
 	cfv = glm::vec3(glm::rotate(amt, axis) * glm::vec4(cfv, 0.f));
 	cfv += lookAt;
 	eyePos = cfv;
-	*matrix = glm::lookAt(eyePos, lookAt, up);
+	ConstructMatrix();
+}
+
+void Camera::SetPosition(glm::vec3 eye)
+{
+	eyePos = eye;
+	ConstructMatrix();
+}
+
+void Camera::SetTarget(glm::vec3 target)
+{
+	lookAt = target;
+	ConstructMatrix();
 }
 
 glm::mat4 *Camera::GetMatrix()
