@@ -25,5 +25,6 @@ public:
 
 	glm::mat4* GetMatrix();
 	glm::mat4* GetProjectionMatrix();
+	glm::vec3* GetEyePosition();
 };
 

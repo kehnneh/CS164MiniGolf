@@ -22,7 +22,9 @@ public:
 		color,
 		normal,
 		// The sun is where the global light source comes from
-		sun;
+		sun,
+		// Eye is where the user's "eye" is located
+		eye;
 
 	GLuint
 		// Vertex Array Objects for OGL. Data gets pushed into these.

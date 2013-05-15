@@ -28,7 +28,7 @@ void ArcballCamera::ConstructMatrix()
 
 void ArcballCamera::Rotate(float amt, vec3 axis)
 {
-	eye = vec3(rotate(amt, axis) * vec4(eye - target, .0f)) + target;
+	eye = vec3(rotate(amt, axis) * vec4(eye - target, 1.f)) + target;
 	ConstructMatrix();
 }
 

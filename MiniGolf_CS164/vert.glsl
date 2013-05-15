@@ -6,6 +6,7 @@ uniform mat4 transform; // models transform
 uniform mat4 proj; // Projection matrix
 uniform mat3 normalMat; // Normal matrix
 uniform vec3 L_p; // Light position
+uniform vec3 eye; // eye position
 
 //input variables from host
 in vec3 pos; //vertex position
@@ -21,9 +22,10 @@ out vec4 frag_color;
 void main() {
     mat4 modelView = camera * transform;
 
-    vec3 eye = -camera[3].xyz * mat3(camera);
+	// Dynamically calculating the eye position may be a really bad idea.
+    // vec3 eye = -camera[3].xyz * mat3(camera);
 
-    vec4 posT = modelView * vec4(pos,1.0);
+    vec4 posT = modelView * vec4(pos, 1.0);
     
     L = normalize(modelView * vec4(L_p, 1.0)).xyz;
 
@@ -34,6 +36,7 @@ void main() {
     V = normalize(V - posT.xyz);
     
     frag_color = color;
+	//frag_color.rgb = vec3(1.0, 1.0, 1.0) * -posT.z;
     
     gl_Position = proj * posT;
 }

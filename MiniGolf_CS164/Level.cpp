@@ -22,11 +22,11 @@ Level::~Level()
 void Level::Render(Camera* camera, Shader* shader)
 {	
 	glUniform3fv(shader->sun, 1, (GLfloat*) &lightDir);
-	
+
 	for (std::vector<Renderable*>::iterator it = tiles.begin(); it != tiles.end(); ++it)
 	{
 		(*it)->Render(camera);
-		//((Tile*)(*it))->RenderBorders(camera);
+		((Tile*)(*it))->RenderBorders(camera);
 	}
 
 	for (std::vector<Renderable*>::iterator it = others.begin(); it != others.end(); ++it)

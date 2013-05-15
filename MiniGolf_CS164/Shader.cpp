@@ -74,6 +74,7 @@ bool Shader::Init(char* vsFile, char* fragFile)
 	mat_normal = glGetUniformLocation(program, "normalMat");
 
 	sun = glGetUniformLocation(program, "L_p");
+	eye = glGetUniformLocation(program, "eye");
 
 	vertex = glGetAttribLocation(program, "pos");
 	color = glGetAttribLocation(program, "color");

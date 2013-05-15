@@ -12,11 +12,11 @@ private:
 	// Internal data
 	bool m_keys[256];
 
-	inline bool IsKeyPressed(unsigned char key);
-
 public:
 	UserInput();
 	~UserInput();
+
+	inline bool IsKeyPressed(unsigned char key);
 
 	void BindCamera(Camera* c);
 

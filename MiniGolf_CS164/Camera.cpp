@@ -68,3 +68,8 @@ glm::mat4 *Camera::GetProjectionMatrix()
 {
 	return projection;
 }
+
+glm::vec3 *Camera::GetEyePosition()
+{
+	return &eyePos;
+}

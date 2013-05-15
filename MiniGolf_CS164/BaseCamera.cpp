@@ -41,3 +41,13 @@ void BaseCamera::SetFarPlane(float z)
 	zfar = z;
 	CreateProjectionMatrix();
 }
+
+glm::mat4 *BaseCamera::GetMatrix()
+{
+	return matrix;
+}
+
+glm::mat4 *BaseCamera::GetProjectionMatrix()
+{
+	return projection;
+}

@@ -20,6 +20,7 @@ void display()
 {
 	glViewport(0, 0, 640, 480);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 
 	kengine->level->Render(kengine->camera, kengine->shader);
 
@@ -29,11 +30,17 @@ void display()
 void Tick(int value)
 {
 	// Send new values to the shaders
-	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->camera->GetMatrix());
+	glUniform3fv(kengine->shader->eye, 1, (GLfloat*) kengine->camera->GetEyePosition());
+	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->ac->GetMatrix());//kengine->camera->GetMatrix());
 	glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->camera->GetProjectionMatrix());
 
 	// Handle user input
-	kengine->userInput->Tick();
+	//kengine->userInput->Tick();
+
+	if (kengine->userInput->IsKeyPressed('q'))
+	{
+		kengine->ac->Rotate(-1.f, glm::vec3(0.f, 1.f, 0.f));
+	}
 
 	glutPostRedisplay();
 	glutTimerFunc(20, Tick, 0);
@@ -55,8 +62,8 @@ void Kengine::InitGlut(int argc, char** argv)
 	glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
 
 	// Use both!
-	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT_AND_BACK);
 
 	windowId = glutCreateWindow("Derp");
 }
@@ -80,6 +87,9 @@ bool Kengine::Init(int argc, char** argv)
 
 	camera = new Camera;
 	camera->Init(glm::vec3(3.f, 4.f, 3.f), glm::vec3(.0f, .0f, .0f), glm::vec3(.0f, 1.f, .0f));
+
+	ac = new ArcballCamera;
+	ac->Init(glm::vec3(4.f, 4.f, 0.f), glm::vec3(.0f, .0f, .0f), glm::vec3(.0f, 1.f, .0f));
 
 	userInput = new UserInput;
 	userInput->BindCamera(camera);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ArcballCamera.h"
+
 class UserInput;
 class Shader;
 class Camera;
@@ -18,6 +20,7 @@ public:
 
 	UserInput *userInput;
 	Camera *camera;
+	ArcballCamera *ac;
 	Level *level;
 
 	Kengine();

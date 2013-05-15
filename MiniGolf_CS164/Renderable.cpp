@@ -51,6 +51,7 @@ bool Renderable::Init(glm::vec3* vertData, unsigned int numVerts)
 {
 	transform = new glm::mat4;
 
+
 	vertices = numVerts;
 	vertexData = vertData;
 	TriangulateVertices();
@@ -141,7 +142,8 @@ void Renderable::BindIndices()
 
 void Renderable::Render(Camera* c)
 {
-	glUniformMatrix4fv(activeShader->mat_modelTransform, 1, GL_FALSE, (GLfloat*) transform);
+	//glUniformMatrix4fv(activeShader->mat_modelTransform, 1, GL_FALSE, (GLfloat*) transform);
+	glUniformMatrix4fv(activeShader->mat_modelTransform, 1, GL_FALSE, (GLfloat*) new glm::mat4);
 
 	glm::mat3 normalMat = glm::inverseTranspose(glm::mat3(*transform * *c->GetMatrix()));
 	glUniformMatrix3fv(activeShader->mat_normal, 1, GL_FALSE, (GLfloat*) &normalMat);
