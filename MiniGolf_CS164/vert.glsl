@@ -6,7 +6,6 @@ uniform mat4 transform; // models transform
 uniform mat4 proj; // Projection matrix
 uniform mat3 normalMat; // Normal matrix
 uniform vec3 L_p; // Light position
-uniform vec3 View; // Eye position
 
 //input variables from host
 in vec3 pos; //vertex position
