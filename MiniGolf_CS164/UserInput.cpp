@@ -41,11 +41,11 @@ void UserInput::Tick()
 	}
 	else if (IsKeyPressed('q'))
 	{
-		camera->ArcRotate(1.f, glm::vec3(0.f, 1.f, 0.f));
+		camera->ArcRotate(-1.f, glm::vec3(0.f, 1.f, 0.f));
 	}
 	else if (IsKeyPressed('e'))
 	{
-		camera->ArcRotate(-1.f, glm::vec3(0.f, 1.f, 0.f));
+		camera->ArcRotate(1.f, glm::vec3(0.f, 1.f, 0.f));
 	}
 	else if (IsKeyPressed('w'))
 	{

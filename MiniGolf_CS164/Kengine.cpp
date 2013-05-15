@@ -54,7 +54,9 @@ void Kengine::InitGlut(int argc, char** argv)
 	glClearColor(0.f, 0.f, 0.f, 0.f);
 	glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
 
+	// Use both!
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 	windowId = glutCreateWindow("Derp");
 }

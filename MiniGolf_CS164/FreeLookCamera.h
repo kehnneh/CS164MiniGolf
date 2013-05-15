@@ -4,6 +4,7 @@ class FreeLookCamera : public BaseCamera
 {
 private:
 	float pitch, yaw;
+	glm::vec3 eye;
 
 protected:
 	void ConstructMatrix();
@@ -11,5 +12,8 @@ protected:
 public:
 	FreeLookCamera();
 	~FreeLookCamera();
+
+	void RotateX(float amt);
+	void RotateY(float amt);
 };
 

@@ -26,7 +26,7 @@ void Level::Render(Camera* camera, Shader* shader)
 	for (std::vector<Renderable*>::iterator it = tiles.begin(); it != tiles.end(); ++it)
 	{
 		(*it)->Render(camera);
-		((Tile*)(*it))->RenderBorders(camera);
+		//((Tile*)(*it))->RenderBorders(camera);
 	}
 
 	for (std::vector<Renderable*>::iterator it = others.begin(); it != others.end(); ++it)
@@ -99,21 +99,21 @@ bool Level::Init(std::string filename)
 				Renderable* r = new Renderable;
 				glm::vec3* vertData = new glm::vec3[4];
 
-				vertData[0].x = teePos.x + 0.1f;
-				vertData[0].y = teePos.y + 0.01f;
-				vertData[0].z = teePos.z + 0.1f;
-
-				vertData[1].x = teePos.x - 0.1f;
-				vertData[1].y = teePos.y + 0.01f;
-				vertData[1].z = teePos.z + 0.1f;
+				vertData[3].x = teePos.x + 0.1f;
+				vertData[3].y = teePos.y + 0.01f;
+				vertData[3].z = teePos.z + 0.1f;
 
 				vertData[2].x = teePos.x - 0.1f;
 				vertData[2].y = teePos.y + 0.01f;
-				vertData[2].z = teePos.z - 0.1f;
+				vertData[2].z = teePos.z + 0.1f;
 
-				vertData[3].x = teePos.x + 0.1f;
-				vertData[3].y = teePos.y + 0.01f;
-				vertData[3].z = teePos.z - 0.1f;
+				vertData[1].x = teePos.x - 0.1f;
+				vertData[1].y = teePos.y + 0.01f;
+				vertData[1].z = teePos.z - 0.1f;
+
+				vertData[0].x = teePos.x + 0.1f;
+				vertData[0].y = teePos.y + 0.01f;
+				vertData[0].z = teePos.z - 0.1f;
 
 				if (!r->Init(vertData, 4))
 				{
@@ -132,21 +132,21 @@ bool Level::Init(std::string filename)
 			Renderable* r = new Renderable;
 			glm::vec3* vertData = new glm::vec3[4];
 
-			vertData[0].x = cupPos.x + 0.1f;
-			vertData[0].y = cupPos.y + 0.01f;
-			vertData[0].z = cupPos.z + 0.1f;
-
-			vertData[1].x = cupPos.x - 0.1f;
-			vertData[1].y = cupPos.y + 0.01f;
-			vertData[1].z = cupPos.z + 0.1f;
+			vertData[3].x = cupPos.x + 0.1f;
+			vertData[3].y = cupPos.y + 0.01f;
+			vertData[3].z = cupPos.z + 0.1f;
 
 			vertData[2].x = cupPos.x - 0.1f;
 			vertData[2].y = cupPos.y + 0.01f;
-			vertData[2].z = cupPos.z - 0.1f;
+			vertData[2].z = cupPos.z + 0.1f;
 
-			vertData[3].x = cupPos.x + 0.1f;
-			vertData[3].y = cupPos.y + 0.01f;
-			vertData[3].z = cupPos.z - 0.1f;
+			vertData[1].x = cupPos.x - 0.1f;
+			vertData[1].y = cupPos.y + 0.01f;
+			vertData[1].z = cupPos.z - 0.1f;
+
+			vertData[0].x = cupPos.x + 0.1f;
+			vertData[0].y = cupPos.y + 0.01f;
+			vertData[0].z = cupPos.z - 0.1f;
 
 			if (!r->Init(vertData, 4))
 			{

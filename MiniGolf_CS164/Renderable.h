@@ -11,6 +11,8 @@ class Camera;
 class Renderable
 {
 protected:
+	// TODO: Need a matrix! If everything is rendered in the same spot it will always overlap itself, distorting the rendered scene.
+
 	unsigned int vertices, indices;
 
 	glm::vec4* colorData;
