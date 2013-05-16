@@ -7,7 +7,13 @@ static float fovy = 45.f,
 			 znear = 0.1f,
 			 zfar = 10000.f;
 
-BaseCamera::BaseCamera() {}
+BaseCamera::BaseCamera()
+{
+	// Pitch is hardcoded. Maybe figure out a method to figure out what the actual pitch angle is AFTER
+	// initialization, that way pitch initialization will be dynamic
+	pitch = -45.f;
+	yaw = 0.f;
+}
 
 BaseCamera::~BaseCamera() {}
 
@@ -40,6 +46,23 @@ void BaseCamera::SetFarPlane(float z)
 {
 	zfar = z;
 	CreateProjectionMatrix();
+}
+
+void BaseCamera::RotateX(float amt)
+{
+	// modify pitch in another method
+	*matrix = glm::rotate(*matrix, pitch, glm::vec3(1.f, 0.f, 0.f));
+}
+
+void BaseCamera::RotateY(float amt)
+{
+	// modify yaw in another method
+	*matrix = glm::rotate(*matrix, yaw, glm::vec3(0.f, 1.f, 0.f));
+}
+
+void alternateConstructMatrix()
+{
+	// *matrix = Rotate
 }
 
 glm::mat4 *BaseCamera::GetMatrix()
