@@ -90,7 +90,6 @@
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="UserInput.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -104,11 +103,7 @@
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Tile.h" />
-    <ClInclude Include="Triangle.h" />
     <ClInclude Include="UserInput.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
