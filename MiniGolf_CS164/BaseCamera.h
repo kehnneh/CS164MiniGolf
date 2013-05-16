@@ -25,8 +25,8 @@ public:
 	void SetScreenSize(float x, float y);
 	void SetFarPlane(float z);
 
-	void RotateX(float amt);
-	void RotateY(float amt);
+	void RotateX();
+	void RotateY();
 
 	glm::mat4 *GetMatrix();
 	glm::mat4 *GetProjectionMatrix();

@@ -5,6 +5,8 @@
 #include "Camera.h"
 #include "Level.h"
 
+static Kengine *kengine = 0;
+
 // Registers key presses with the input manager
 void keyboard(unsigned char key, int x, int y)
 {

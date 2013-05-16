@@ -30,5 +30,3 @@ public:
 
 	void Run();
 };
-
-static Kengine *kengine = 0;

@@ -48,13 +48,13 @@ void BaseCamera::SetFarPlane(float z)
 	CreateProjectionMatrix();
 }
 
-void BaseCamera::RotateX(float amt)
+void BaseCamera::RotateX()
 {
 	// modify pitch in another method
 	*matrix = glm::rotate(*matrix, pitch, glm::vec3(1.f, 0.f, 0.f));
 }
 
-void BaseCamera::RotateY(float amt)
+void BaseCamera::RotateY()
 {
 	// modify yaw in another method
 	*matrix = glm::rotate(*matrix, yaw, glm::vec3(0.f, 1.f, 0.f));
