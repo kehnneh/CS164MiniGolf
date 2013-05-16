@@ -41,8 +41,22 @@ void Tick(int value)
 
 	if (kengine->userInput->IsKeyPressed('q'))
 	{
-		kengine->ac->Rotate(-1.f, glm::vec3(0.f, 1.f, 0.f));
+		kengine->ac->IncYaw(-1.f);
 	}
+	else if (kengine->userInput->IsKeyPressed('e'))
+	{
+		kengine->ac->IncYaw(1.f);
+	}
+	else if (kengine->userInput->IsKeyPressed('w'))
+	{
+		kengine->ac->IncPitch(1.f);
+	}
+	else if (kengine->userInput->IsKeyPressed('s'))
+	{
+		kengine->ac->IncPitch(-1.f);
+	}
+
+	kengine->ac->Tick();
 
 	glutPostRedisplay();
 	glutTimerFunc(20, Tick, 0);
