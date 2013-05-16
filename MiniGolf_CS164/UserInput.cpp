@@ -1,7 +1,7 @@
 #include <gl\freeglut.h>
 
 #include "UserInput.h"
-#include "Camera.h"
+#include "BaseCamera.h"
 
 UserInput::UserInput()
 {
@@ -28,7 +28,7 @@ bool UserInput::IsKeyPressed(unsigned char key)
 	return m_keys[key];
 }
 
-void UserInput::BindCamera(Camera* c)
+void UserInput::BindCamera(BaseCamera* c)
 {
 	camera = c;
 }
@@ -41,18 +41,34 @@ void UserInput::Tick()
 	}
 	else if (IsKeyPressed('q'))
 	{
-		camera->ArcRotate(-1.f, glm::vec3(0.f, 1.f, 0.f));
+		camera->IncYaw(-1.f);
 	}
 	else if (IsKeyPressed('e'))
 	{
-		camera->ArcRotate(1.f, glm::vec3(0.f, 1.f, 0.f));
+		camera->IncYaw(1.f);
 	}
 	else if (IsKeyPressed('w'))
 	{
-		camera->ArcRotate(1.f, glm::vec3(1.f, 0.f, 0.f));
+		camera->IncPitch(1.f);
 	}
 	else if (IsKeyPressed('s'))
 	{
-		camera->ArcRotate(-1.f, glm::vec3(1.f, 0.f, 0.f));
+		camera->IncPitch(-1.f);
+	}
+	else if (IsKeyPressed('a'))
+	{
+		camera->TranslateX(-.25f);
+	}
+	else if (IsKeyPressed('d'))
+	{
+		camera->TranslateX(.25f);
+	}
+	else if (IsKeyPressed('z'))
+	{
+		camera->TranslateZ(.25f);
+	}
+	else if (IsKeyPressed('x'))
+	{
+		camera->TranslateZ(-.25f);
 	}
 }

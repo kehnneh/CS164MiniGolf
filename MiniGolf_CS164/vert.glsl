@@ -7,6 +7,7 @@ uniform mat4 proj; // Projection matrix
 uniform mat3 normalMat; // Normal matrix
 uniform vec3 L_p; // Light position
 uniform vec3 eye; // eye position
+uniform vec4 ambient; // ambient light intensity
 
 //input variables from host
 in vec3 pos; //vertex position
@@ -17,6 +18,7 @@ in vec4 color; //vertex color
 out vec3 L;
 out vec3 N;
 out vec3 V;
+out vec4 ambientLight;
 out vec4 frag_color;
 
 void main() {
@@ -38,5 +40,6 @@ void main() {
     frag_color = color;
 	//frag_color.rgb = vec3(1.0, 1.0, 1.0) * -posT.z;
     
+	ambientLight = ambient;
     gl_Position = proj * posT;
 }

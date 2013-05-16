@@ -23,6 +23,8 @@ public:
 		normal,
 		// The sun is where the global light source comes from
 		sun,
+		// ambient world lighting
+		ambient,
 		// Eye is where the user's "eye" is located
 		eye;
 

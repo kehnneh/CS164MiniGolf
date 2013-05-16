@@ -1,7 +1,7 @@
 #include "Renderable.h"
 #include "Shader.h"
 #include "CommonUtils.h"
-#include "Camera.h"
+#include "BaseCamera.h"
 
 #include <glm\gtc\matrix_inverse.hpp>
 
@@ -140,10 +140,9 @@ void Renderable::BindIndices()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GL_UNSIGNED_INT) * indices, indexData, GL_STATIC_DRAW);
 }
 
-void Renderable::Render(Camera* c)
+void Renderable::Render(BaseCamera* c)
 {
-	//glUniformMatrix4fv(activeShader->mat_modelTransform, 1, GL_FALSE, (GLfloat*) transform);
-	glUniformMatrix4fv(activeShader->mat_modelTransform, 1, GL_FALSE, (GLfloat*) new glm::mat4);
+	glUniformMatrix4fv(activeShader->mat_modelTransform, 1, GL_FALSE, (GLfloat*) transform);
 
 	glm::mat3 normalMat = glm::inverseTranspose(glm::mat3(*transform * *c->GetMatrix()));
 	glUniformMatrix3fv(activeShader->mat_normal, 1, GL_FALSE, (GLfloat*) &normalMat);

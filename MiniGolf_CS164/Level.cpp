@@ -1,6 +1,6 @@
 #include "Level.h"
 #include "Renderable.h"
-#include "Camera.h"
+#include "BaseCamera.h"
 #include "Shader.h"
 
 Level::Level()
@@ -19,8 +19,9 @@ Level::~Level()
 	}
 }
 
-void Level::Render(Camera* camera, Shader* shader)
+void Level::Render(BaseCamera* camera, Shader* shader)
 {	
+	glUniform4fv(shader->ambient, 1, (GLfloat*) &ambientLight);
 	glUniform3fv(shader->sun, 1, (GLfloat*) &lightDir);
 
 	for (std::vector<Renderable*>::iterator it = tiles.begin(); it != tiles.end(); ++it)
@@ -37,6 +38,8 @@ void Level::Render(Camera* camera, Shader* shader)
 
 bool Level::Init(std::string filename)
 {
+	ambientLight = glm::vec4(.2f, .2f, .2f, 1.f);
+
 	std::ifstream fin(filename.c_str());
 	char c;
 	unsigned short id, edges;

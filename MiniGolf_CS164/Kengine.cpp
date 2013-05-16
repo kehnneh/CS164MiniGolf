@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "UserInput.h"
 #include "CommonUtils.h"
-#include "Camera.h"
+#include "BaseCamera.h"
 #include "Level.h"
 
 static Kengine *kengine = 0;
@@ -24,7 +24,7 @@ void display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
-	kengine->level->Render(kengine->camera, kengine->shader);
+	kengine->level->Render(kengine->c, kengine->shader);
 
 	glutSwapBuffers();
 }
@@ -32,31 +32,14 @@ void display()
 void Tick(int value)
 {
 	// Send new values to the shaders
-	glUniform3fv(kengine->shader->eye, 1, (GLfloat*) kengine->camera->GetEyePosition());
-	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->ac->GetMatrix());//kengine->camera->GetMatrix());
-	glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->camera->GetProjectionMatrix());
+	glUniform3fv(kengine->shader->eye, 1, (GLfloat*) kengine->c->GetPosition());
+	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->c->GetMatrix());//kengine->camera->GetMatrix());
+	glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->c->GetProjectionMatrix());
 
 	// Handle user input
-	//kengine->userInput->Tick();
+	kengine->userInput->Tick();
 
-	if (kengine->userInput->IsKeyPressed('q'))
-	{
-		kengine->ac->IncYaw(-1.f);
-	}
-	else if (kengine->userInput->IsKeyPressed('e'))
-	{
-		kengine->ac->IncYaw(1.f);
-	}
-	else if (kengine->userInput->IsKeyPressed('w'))
-	{
-		kengine->ac->IncPitch(1.f);
-	}
-	else if (kengine->userInput->IsKeyPressed('s'))
-	{
-		kengine->ac->IncPitch(-1.f);
-	}
-
-	kengine->ac->Tick();
+	kengine->c->Tick();
 
 	glutPostRedisplay();
 	glutTimerFunc(20, Tick, 0);
@@ -101,14 +84,11 @@ bool Kengine::Init(int argc, char** argv)
 	// Set the Renderable class to use the shader
 	Renderable::BindShader(shader);
 
-	camera = new Camera;
-	camera->Init(glm::vec3(3.f, 4.f, 3.f), glm::vec3(.0f, .0f, .0f), glm::vec3(.0f, 1.f, .0f));
-
-	ac = new ArcballCamera;
-	ac->Init(glm::vec3(4.f, 4.f, 0.f), glm::vec3(.0f, .0f, .0f), glm::vec3(.0f, 1.f, .0f));
+	c = new BaseCamera;
+	c->Init();
 
 	userInput = new UserInput;
-	userInput->BindCamera(camera);
+	userInput->BindCamera(c);
 
 	level = new Level;
 	level->Init(argv[1]);

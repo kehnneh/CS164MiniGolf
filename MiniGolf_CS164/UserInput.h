@@ -1,12 +1,12 @@
 #pragma once
 
-class Camera;
+class BaseCamera;
 
 class UserInput
 {
 private:
 	// External links to variables controlled via UserInput::Tick()
-	Camera* camera;
+	BaseCamera* camera;
 
 private:
 	// Internal data
@@ -18,7 +18,7 @@ public:
 
 	inline bool IsKeyPressed(unsigned char key);
 
-	void BindCamera(Camera* c);
+	void BindCamera(BaseCamera* c);
 
 	void PressKey(unsigned char key);
 	void ReleaseKey(unsigned char key);

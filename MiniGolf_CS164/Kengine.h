@@ -1,10 +1,9 @@
 #pragma once
 
-#include "ArcballCamera.h"
+#include "BaseCamera.h"
 
 class UserInput;
 class Shader;
-class Camera;
 class Level;
 
 class Kengine
@@ -19,8 +18,7 @@ public:
 	Shader *shader;
 
 	UserInput *userInput;
-	Camera *camera;
-	ArcballCamera *ac;
+	BaseCamera *c;
 	Level *level;
 
 	Kengine();

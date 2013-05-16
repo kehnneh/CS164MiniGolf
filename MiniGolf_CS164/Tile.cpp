@@ -69,7 +69,7 @@ void Tile::Finalize()
 	}
 }
 
-void Tile::RenderBorders(Camera* c)
+void Tile::RenderBorders(BaseCamera* c)
 {
 	for (std::vector<Renderable*>::iterator it = borders.begin(); it != borders.end(); ++it)
 	{
