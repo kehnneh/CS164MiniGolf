@@ -18,7 +18,7 @@ protected:
 	// Translation is the amount the camera is translated in the xyz directions
 	// relative to the camera's xyz-axes
 	// target is the thing that the camera is looking at. important for arcball
-	glm::vec3 eye, translation, target;
+	glm::vec3 eye, target;
 
 	float pitch, yaw;
 
@@ -35,9 +35,8 @@ public:
 	  yaw(0.f),
 	  bProjectionUpdate(true),
 	  bMatrixUpdate(true),
-	  translation(0.f, 0.f, 0.f),
 	  eye(0.f, 0.f, 0.f),
-	  target(0.f, 0.f, 0.f)
+	  target(0.f, 0.f, 1.f)
 	{}
 	virtual ~BaseCamera()
 	{}
@@ -51,6 +50,10 @@ public:
 
 	void IncYaw(float degrees);
 	void IncPitch(float degrees);
+
+	void MoveForward();
+	void MoveRight();
+	void MoveUp();
 
 	void TranslateX(float distance);
 	void TranslateY(float distance);

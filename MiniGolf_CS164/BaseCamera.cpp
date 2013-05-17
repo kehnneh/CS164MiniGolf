@@ -22,7 +22,12 @@ void BaseCamera::Init()
 {
 	matrix = new glm::mat4;
 	projection = new glm::mat4;
-	translation.z = 6.f; // Arcball has initial Z translation
+	//translation.z = 6.f; // Arcball has initial Z translation
+	//*matrix = glm::lookAt(eye, target, glm::vec3(0.f, 1.f, 0.f));
+	//*matrix = glm::rotate(*matrix, pitch, XAXIS);
+	//*matrix = glm::rotate(*matrix, yaw, YAXIS);
+	//glm::vec3 z_late((*matrix)[0].z, (*matrix)[1].z, (*matrix)[2].z);
+	//*matrix = glm::translate(*matrix, -z_late * 5.f);
 }
 
 void BaseCamera::DeInit()
@@ -38,14 +43,14 @@ void BaseCamera::ProjectionMatrix()
 
 void BaseCamera::Matrix()
 {
-	// Initialize the camera matrix to look be positioned at (0, 0, -1) looking in the direction (0, 0, 1)
 	*matrix = glm::lookAt(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 1.f, 0.f));
-	//*matrix = glm::lookAt(glm::vec3(0.f, 0.f, -1.f), target, glm::vec3(0.f, 1.f, 0.f));
-
-	Translate();
-	RotateX();
-	RotateY();
-	//Translate();
+	*matrix = glm::rotate(*matrix, pitch, XAXIS);
+	*matrix = glm::rotate(*matrix, yaw, YAXIS);
+	glm::vec3 altget = target;
+	altget.z -= 1.f;
+	*matrix = glm::translate(*matrix, altget);
+	glm::vec3 z_late((*matrix)[0].z, (*matrix)[1].z, (*matrix)[2].z);
+	*matrix = glm::translate(*matrix, -z_late * 5.f);
 }
 
 // Checks to see if the particular matrix needs updating, and then updates it
@@ -136,24 +141,23 @@ void BaseCamera::RotateY()
 // Translates along the Camera's X-Axis
 void BaseCamera::TranslateX(float distance)
 {
-	translation.x += distance;
-	//target.x += distance;
+	glm::vec3 x_late((*matrix)[0].x, (*matrix)[1].x, (*matrix)[2].x);
+
+	target -= x_late * distance;
+	eye -= x_late * distance;
+
 	bMatrixUpdate = true;
 }
 
 // Translates along the Camera's Y-Axis
 void BaseCamera::TranslateY(float distance)
 {
-	translation.y += distance;
-	//target.y += distance;
 	bMatrixUpdate = true;
 }
 
 // Translates along the Camera's Z-axis
 void BaseCamera::TranslateZ(float distance)
 {
-	translation.z += distance;
-	//target.z += distance;
 	bMatrixUpdate = true;
 }
 
@@ -167,10 +171,10 @@ void BaseCamera::Translate()
 	glm::vec3 y_late((*matrix)[0].y, (*matrix)[1].y, (*matrix)[2].y);
 	glm::vec3 x_late((*matrix)[0].x, (*matrix)[1].x, (*matrix)[2].x);
 
-	eye = (x_late * translation.x) + (y_late * translation.y) + (z_late * translation.z);
+	//eye = (x_late * translation.x) + (y_late * translation.y) + (z_late * translation.z);
 
 	z_late.y = 0.f;
-	target = (x_late * translation.x) + (y_late * translation.y) + (z_late);
+	//target = (x_late * translation.x) + (y_late * translation.y) + (z_late);
 
 	*matrix = glm::translate(*matrix, -eye);
 	//*matrix = glm::translate(-eye) * *matrix;
