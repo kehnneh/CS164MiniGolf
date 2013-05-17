@@ -22,12 +22,6 @@ void BaseCamera::Init()
 {
 	matrix = new glm::mat4;
 	projection = new glm::mat4;
-	//translation.z = 6.f; // Arcball has initial Z translation
-	//*matrix = glm::lookAt(eye, target, glm::vec3(0.f, 1.f, 0.f));
-	//*matrix = glm::rotate(*matrix, pitch, XAXIS);
-	//*matrix = glm::rotate(*matrix, yaw, YAXIS);
-	//glm::vec3 z_late((*matrix)[0].z, (*matrix)[1].z, (*matrix)[2].z);
-	//*matrix = glm::translate(*matrix, -z_late * 5.f);
 }
 
 void BaseCamera::DeInit()
@@ -43,14 +37,19 @@ void BaseCamera::ProjectionMatrix()
 
 void BaseCamera::Matrix()
 {
-	*matrix = glm::lookAt(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 1.f, 0.f));
+	// Initialize the matrix at the origin
+	*matrix = glm::lookAt(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f), up);
+	// Perform rotations at the origin
 	*matrix = glm::rotate(*matrix, pitch, XAXIS);
 	*matrix = glm::rotate(*matrix, yaw, YAXIS);
-	glm::vec3 altget = target;
-	altget.z -= 1.f;
-	*matrix = glm::translate(*matrix, altget);
+
+	// Translates the camera such that it is positioned at the fixed point
+	// Here, target is the fixed point to rotate about
+	*matrix = glm::translate(*matrix, target);
+
+	// Grab the Camera's z-axis vector and move negatively along it
 	glm::vec3 z_late((*matrix)[0].z, (*matrix)[1].z, (*matrix)[2].z);
-	*matrix = glm::translate(*matrix, -z_late * 5.f);
+	*matrix = glm::translate(*matrix, z_late * -5.f);
 }
 
 // Checks to see if the particular matrix needs updating, and then updates it

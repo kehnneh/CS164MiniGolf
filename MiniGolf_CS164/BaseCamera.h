@@ -12,13 +12,14 @@ private:
 	void ProjectionMatrix();
 
 protected:
-	glm::mat4 *matrix, *projection;
+	glm::mat4 *matrix;
+	glm::mat4 *projection;
 
 	// Eye is where the eye is located.
 	// Translation is the amount the camera is translated in the xyz directions
 	// relative to the camera's xyz-axes
 	// target is the thing that the camera is looking at. important for arcball
-	glm::vec3 eye, target;
+	glm::vec3 eye, target, up;
 
 	float pitch, yaw;
 
@@ -36,7 +37,8 @@ public:
 	  bProjectionUpdate(true),
 	  bMatrixUpdate(true),
 	  eye(0.f, 0.f, 0.f),
-	  target(0.f, 0.f, 1.f)
+	  target(0.f, 0.f, 0.f),
+	  up(0.f, 1.f, 0.f)
 	{}
 	virtual ~BaseCamera()
 	{}
