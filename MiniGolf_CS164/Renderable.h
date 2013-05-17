@@ -11,6 +11,8 @@ class BaseCamera;
 class Renderable
 {
 protected:
+	float scaleFactor;
+
 	unsigned int vertices, indices;
 
 	// The matrix doesn't do anything right now, since the vertices are hard coded. Vertices need to be abstracted such that
@@ -42,6 +44,9 @@ public:
 	bool Init(glm::vec3* vertData, unsigned int numVerts);
 
 	void Render(BaseCamera* c);
+
+	void UniformScale(float factor);
+	void SetPosition(glm::vec3 pos);
 	
 	static void BindShader(Shader* s);
 };

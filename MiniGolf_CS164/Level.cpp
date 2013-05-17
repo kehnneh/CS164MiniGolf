@@ -5,7 +5,7 @@
 
 Level::Level()
 {
-	lightDir = glm::vec3(.0f, 10.f, 0.f);
+	lightDir = glm::vec3(5.f, 10.f, 0.f);
 }
 
 Level::~Level()
@@ -173,6 +173,10 @@ bool Level::Init(std::string filename)
 	}
 
 	others.push_back(ball);
+
+	ball->SetPosition(glm::vec3(teePos.x, teePos.y + 0.05, teePos.z));
+	ball->UniformScale(0.05f);
+	
 
 	return true;
 }

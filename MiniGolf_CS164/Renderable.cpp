@@ -15,6 +15,7 @@ Renderable::Renderable()
 {
 	vertices = 0;
 	indices = 0;
+	scaleFactor = 1.f;
 
 #ifdef USE_GL_TRIANGLE_FAN
 	drawMode = GL_TRIANGLE_FAN;
@@ -49,6 +50,18 @@ void Renderable::GenerateColor()
 	}
 }
 
+void Renderable::UniformScale(float factor)
+{
+	scaleFactor = factor;
+	*transform = glm::scale(*transform, glm::vec3(scaleFactor, scaleFactor, scaleFactor));
+}
+
+void Renderable::SetPosition(glm::vec3 pos)
+{
+	*transform = glm::translate(*transform, pos * scaleFactor);
+}
+
+// This is hacked. ifstream on Windows is piss poor
 bool FileCount(char* filename, unsigned int& vertices, unsigned int& indices)
 {
 	vertices = 162;
