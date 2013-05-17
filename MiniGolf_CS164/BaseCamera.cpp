@@ -39,7 +39,8 @@ void BaseCamera::ProjectionMatrix()
 void BaseCamera::Matrix()
 {
 	// Initialize the camera matrix to look be positioned at (0, 0, -1) looking in the direction (0, 0, 1)
-	*matrix = glm::lookAt(glm::vec3(0.f, 0.f, -1.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+	*matrix = glm::lookAt(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 1.f, 0.f));
+	//*matrix = glm::lookAt(glm::vec3(0.f, 0.f, -1.f), target, glm::vec3(0.f, 1.f, 0.f));
 
 	Translate();
 	RotateX();
@@ -136,6 +137,7 @@ void BaseCamera::RotateY()
 void BaseCamera::TranslateX(float distance)
 {
 	translation.x += distance;
+	//target.x += distance;
 	bMatrixUpdate = true;
 }
 
@@ -143,6 +145,7 @@ void BaseCamera::TranslateX(float distance)
 void BaseCamera::TranslateY(float distance)
 {
 	translation.y += distance;
+	//target.y += distance;
 	bMatrixUpdate = true;
 }
 
@@ -150,6 +153,7 @@ void BaseCamera::TranslateY(float distance)
 void BaseCamera::TranslateZ(float distance)
 {
 	translation.z += distance;
+	//target.z += distance;
 	bMatrixUpdate = true;
 }
 
@@ -164,6 +168,9 @@ void BaseCamera::Translate()
 	glm::vec3 x_late((*matrix)[0].x, (*matrix)[1].x, (*matrix)[2].x);
 
 	eye = (x_late * translation.x) + (y_late * translation.y) + (z_late * translation.z);
+
+	z_late.y = 0.f;
+	target = (x_late * translation.x) + (y_late * translation.y) + (z_late);
 
 	*matrix = glm::translate(*matrix, -eye);
 	//*matrix = glm::translate(-eye) * *matrix;

@@ -1,3 +1,5 @@
+#include <fstream>
+
 #include "Renderable.h"
 #include "Shader.h"
 #include "CommonUtils.h"
@@ -47,10 +49,103 @@ void Renderable::GenerateColor()
 	}
 }
 
-bool Renderable::Init(glm::vec3* vertData, unsigned int numVerts)
+bool FileCount(char* filename, unsigned int& vertices, unsigned int& indices)
+{
+	vertices = 162;
+	indices = 960;
+	/*
+	std::ifstream fin(filename);
+	char c;
+
+	if (fin.fail())
+	{
+		return false;
+	}
+
+	fin.get(c);
+
+	while(!fin.eof())
+	{
+		if (c == 'v') vertices++;
+		else if (c == 'f') indices += 3;
+		fin.get(c);
+	}
+	
+	fin.close();
+	*/
+	return true;
+}
+
+// Takes the filename of a *.obj file to load and constructs vertices, normals, and colors from it
+bool Renderable::Init(char* filename)
 {
 	transform = new glm::mat4;
 
+	if (!FileCount(filename, vertices, indices))
+	{
+		// Couldn't load the file probably
+		return false;
+	}
+
+	std::ifstream fin;
+	char c;
+
+	fin.open(filename);
+	if (fin.fail())
+	{
+		// failure to open model file
+		// can't imagine it fails here, if it didn't fail before
+		return false;
+	}
+
+	vertexData = new glm::vec3[vertices];
+	indexData = new unsigned int[indices];
+
+	fin.get(c);
+
+	// Lol
+	unsigned int vertexIndex = 0, indexIndex = 0;
+
+	while(!fin.eof())
+	{
+		if (c == 'v')
+		{
+			fin.get(c);
+
+			if (c == ' ')
+			{
+				fin >> vertexData[vertexIndex].x >> vertexData[vertexIndex].y >> vertexData[vertexIndex].z;
+				//vertexData[vertexIndex].y *= -1.f;
+				vertexIndex++;
+			}
+		}
+		else if (c == 'f')
+		{
+			fin >> indexData[indexIndex] >> indexData[indexIndex + 1] >> indexData[indexIndex + 2];
+			indexData[indexIndex]--;
+			indexData[indexIndex + 1]--;
+			indexData[indexIndex + 2]--;
+			indexIndex += 3;
+		}
+
+		while (c != '\n')
+		{
+			fin.get(c);
+		}
+
+		fin.get(c);
+		// Read the next line (if there is one)
+	}
+
+	fin.close();
+	GenerateColor();
+	GenerateNormals();
+	return true;
+}
+
+bool Renderable::Init(glm::vec3* vertData, unsigned int numVerts)
+{
+	transform = new glm::mat4;
 
 	vertices = numVerts;
 	vertexData = vertData;

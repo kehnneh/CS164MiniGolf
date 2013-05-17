@@ -26,8 +26,8 @@ void Level::Render(BaseCamera* camera, Shader* shader)
 
 	for (std::vector<Renderable*>::iterator it = tiles.begin(); it != tiles.end(); ++it)
 	{
-		(*it)->Render(camera);
-		((Tile*)(*it))->RenderBorders(camera);
+		//(*it)->Render(camera);
+		//((Tile*)(*it))->RenderBorders(camera);
 	}
 
 	for (std::vector<Renderable*>::iterator it = others.begin(); it != others.end(); ++it)
@@ -163,6 +163,17 @@ bool Level::Init(std::string filename)
 	}
 
 	fin.close();
+
+	// Load the golf ball!
+	Renderable *ball = new Renderable;
+	
+	if (!ball->Init("Models/golfball.obj"))
+	{
+		return false;
+	}
+
+	others.push_back(ball);
+
 	return true;
 }
 

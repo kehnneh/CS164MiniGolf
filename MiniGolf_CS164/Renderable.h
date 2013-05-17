@@ -38,6 +38,7 @@ public:
 	Renderable();
 	~Renderable();
 
+	bool Init(char* filename);
 	bool Init(glm::vec3* vertData, unsigned int numVerts);
 
 	void Render(BaseCamera* c);
