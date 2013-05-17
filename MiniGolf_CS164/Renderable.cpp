@@ -11,25 +11,13 @@
 
 static Shader* activeShader = 0;
 
-Renderable::Renderable()
-{
-	vertices = 0;
-	indices = 0;
-	scaleFactor = 1.f;
-
-#ifdef USE_GL_TRIANGLE_FAN
-	drawMode = GL_TRIANGLE_FAN;
-#else
-	drawMode = GL_TRIANGLES;
-#endif
-}
-
-Renderable::~Renderable()
+void Renderable::DeInit()
 {
 	SAFE_DELETE(normalData);
 	SAFE_DELETE(indexData);
 	SAFE_DELETE(colorData);
 	SAFE_DELETE(vertexData);
+	SAFE_DELETE(transform);
 }
 
 void Renderable::BindShader(Shader* shader)

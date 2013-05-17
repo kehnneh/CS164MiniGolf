@@ -3,12 +3,7 @@
 #include "BaseCamera.h"
 #include "Shader.h"
 
-Level::Level()
-{
-	lightDir = glm::vec3(5.f, 10.f, 0.f);
-}
-
-Level::~Level()
+void Level::DeInit()
 {
 	for (unsigned int i = 0; i < tiles.size(); i++)
 	{
@@ -38,8 +33,6 @@ void Level::Render(BaseCamera* camera, Shader* shader)
 
 bool Level::Init(std::string filename)
 {
-	ambientLight = glm::vec4(.2f, .2f, .2f, 1.f);
-
 	std::ifstream fin(filename.c_str());
 	char c;
 	unsigned short id, edges;

@@ -37,11 +37,24 @@ private:
 	virtual void GenerateColor();
 
 public:
-	Renderable();
-	~Renderable();
+	Renderable()
+		: vertices(0),
+		  indices(0),
+		  scaleFactor(1.f),
+		  drawMode(GL_TRIANGLES),
+		  transform(0),
+		  colorData(0),
+		  vertexData(0),
+		  normalData(0),
+		  indexData(0)
+	{}
+	~Renderable()
+	{}
 
 	bool Init(char* filename);
 	bool Init(glm::vec3* vertData, unsigned int numVerts);
+
+	void DeInit();
 
 	void Render(BaseCamera* c);
 

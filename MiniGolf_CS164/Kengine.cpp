@@ -45,11 +45,6 @@ void Tick(int value)
 	glutTimerFunc(20, Tick, 0);
 }
 
-Kengine::Kengine()
-{
-	kengine = this;
-}
-
 void Kengine::InitGlut(int argc, char** argv)
 {
 	glutInit(&argc, argv);
@@ -69,6 +64,13 @@ void Kengine::InitGlut(int argc, char** argv)
 
 bool Kengine::Init(int argc, char** argv)
 {
+	if (argc < 2)
+	{
+		return false;
+	}
+
+	kengine = this;
+
 	// Initialize GLUT and GLEW
 	InitGlut(argc, argv);
 
@@ -111,7 +113,7 @@ void Kengine::Run()
 	glutMainLoop();
 }
 
-Kengine::~Kengine()
+void Kengine::DeInit()
 {
 	SAFE_DELETE(userInput);
 	SAFE_DELETE(shader);

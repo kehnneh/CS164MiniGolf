@@ -21,10 +21,17 @@ public:
 	BaseCamera *c;
 	Level *level;
 
-	Kengine();
-	~Kengine();
+	Kengine()
+		: shader(0),
+		  userInput(0),
+		  c(0),
+		  level(0)
+	{}
+	~Kengine()
+	{}
 
 	bool Init(int argc, char** argv);
+	void DeInit();
 
 	void Run();
 };

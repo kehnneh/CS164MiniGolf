@@ -13,8 +13,13 @@ private:
 	bool m_keys[256];
 
 public:
-	UserInput();
-	~UserInput();
+	UserInput()
+		: camera(0),
+#pragma warning( suppress : 4351 )
+		  m_keys()
+	{}
+	~UserInput()
+	{}
 
 	inline bool IsKeyPressed(unsigned char key);
 
@@ -24,5 +29,8 @@ public:
 	void ReleaseKey(unsigned char key);
 
 	void Tick();
+
+	void Init();
+	void DeInit();
 };
 

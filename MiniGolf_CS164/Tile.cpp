@@ -1,16 +1,6 @@
 #include "Tile.h"
 #include "Renderable.h"
 
-Tile::Tile()
-{
-	neighbors = nullptr;
-}
-
-Tile::Tile(unsigned short Id)
-{
-	tileId = Id;
-}
-
 void Tile::TileInit()
 {
 	edges = vertices;
@@ -77,11 +67,13 @@ void Tile::RenderBorders(BaseCamera* c)
 	}
 }
 
-Tile::~Tile()
+void Tile::DeInit()
 {
 	if (neighbors) delete neighbors;
 	for (std::vector<Renderable*>::iterator it = borders.begin(); it != borders.end(); ++it)
 	{
 		delete *it;
 	}
+
+	Renderable::DeInit();
 }

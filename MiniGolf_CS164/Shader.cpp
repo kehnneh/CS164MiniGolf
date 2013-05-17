@@ -3,14 +3,6 @@
 #include <fstream>
 #include <iostream>
 
-Shader::Shader()
-{
-}
-
-Shader::~Shader()
-{
-}
-
 void Shader::Enable()
 {
 	glUseProgram(program);
@@ -45,6 +37,36 @@ void Shader::PrintLog(char* label, GLint obj)
 	delete infoLog;
 }
 
+void Shader::BindArrayObjects()
+{
+	vertex = glGetAttribLocation(program, "pos");
+	color = glGetAttribLocation(program, "color");
+	normal = glGetAttribLocation(program, "norm");
+}
+
+void Shader::BindUniforms()
+{
+	mat_camera = glGetUniformLocation(program, "camera");
+	mat_modelTransform = glGetUniformLocation(program, "transform");
+	mat_projection = glGetUniformLocation(program, "proj");
+	mat_normal = glGetUniformLocation(program, "normalMat");
+
+	sun = glGetUniformLocation(program, "L_p");
+	ambient = glGetUniformLocation(program, "ambient");
+	eye = glGetUniformLocation(program, "eye");
+}
+
+void Shader::BindBufferObjects()
+{
+	GLuint bufs[4];
+	glGenBuffers(4, bufs);
+
+	vertexBuffer = bufs[0];
+	colorBuffer = bufs[1];
+	indexBuffer = bufs[2];
+	normalBuffer = bufs[3];
+}
+
 bool Shader::Init(char* vsFile, char* fragFile)
 {
 	GLint vSrc = SetShaderSource(vsFile, GL_VERTEX_SHADER),
@@ -68,26 +90,9 @@ bool Shader::Init(char* vsFile, char* fragFile)
 
 	glLinkProgram(program);
 
-	mat_camera = glGetUniformLocation(program, "camera");
-	mat_modelTransform = glGetUniformLocation(program, "transform");
-	mat_projection = glGetUniformLocation(program, "proj");
-	mat_normal = glGetUniformLocation(program, "normalMat");
-
-	sun = glGetUniformLocation(program, "L_p");
-	ambient = glGetUniformLocation(program, "ambient");
-	eye = glGetUniformLocation(program, "eye");
-
-	vertex = glGetAttribLocation(program, "pos");
-	color = glGetAttribLocation(program, "color");
-	normal = glGetAttribLocation(program, "norm");
-
-	GLuint bufs[4];
-	glGenBuffers(4, bufs);
-
-	vertexBuffer = bufs[0];
-	colorBuffer = bufs[1];
-	indexBuffer = bufs[2];
-	normalBuffer = bufs[3];
+	BindArrayObjects();
+	BindUniforms();
+	BindBufferObjects();
 
 	return true;
 }
@@ -111,6 +116,7 @@ GLint Shader::SetShaderSource(char* file, GLenum type)
 	if (count)
 	{
 		fin.seekg(std::ios::beg); // go back to beginning of file
+#pragma warning( suppress : 4244 )
 		data = new char[count + 1]; // allocate memory for the file contents
 		fin.read(data, count); // read the file
 		
@@ -118,6 +124,7 @@ GLint Shader::SetShaderSource(char* file, GLenum type)
 		// This block of code finds the last closed block in
 		// the GLSL source and plugs the source right after that,
 		// such that OGL does not try to compile garbage.
+#pragma warning( suppress : 4244 )
 		for (int i = count; i > 0; i--)
 		{
 			if (data[i] == '}')

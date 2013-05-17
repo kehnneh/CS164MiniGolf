@@ -20,11 +20,22 @@ protected:
 public:
 	unsigned int tileId;
 
-	Tile();
-	Tile(unsigned short Id);
-	~Tile();
+	Tile()
+		: tileId(0),
+		  edges(0),
+		  neighbors(0)
+	{}
+	Tile(unsigned short Id)
+		: tileId(Id),
+		  edges(0),
+		  neighbors(0)
+	{}
+	~Tile()
+	{}
 
 	void TileInit();
+
+	void DeInit();
 
 	bool SetNeighbor(unsigned short edgeId, unsigned short neighborTileId);
 

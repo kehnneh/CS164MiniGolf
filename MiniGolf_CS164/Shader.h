@@ -6,42 +6,54 @@
 class Shader
 {
 public:
+	// Vertex Array Objects
 	GLint
-		// The OpenGL Object that represents the OGL program
 		program,
-		// The OGL object that determines where the camera's matrix gets pushed to
 		mat_camera,
-		// The OGL object that determines where the model's transformation matrix gets pushed to
 		mat_modelTransform,
-		// The OGL object that determines where the camera's projection matrix gets pushed to
 		mat_projection,
-		// The OGL object that determines where the normal matrix gets pushed to
 		mat_normal,
-		// The next four determine where data gets sent on a per-vertex basis
 		vertex,
 		color,
 		normal,
-		// The sun is where the global light source comes from
 		sun,
-		// ambient world lighting
 		ambient,
-		// Eye is where the user's "eye" is located
 		eye;
 
 	GLuint
-		// Vertex Array Objects for OGL. Data gets pushed into these.
+		// Vertex Buffer Objects for OpenGL. Data gets pushed into these.
 		vertexBuffer,
 		colorBuffer,
 		normalBuffer,
 		indexBuffer;
 
-	Shader();
-	~Shader();
+	Shader()
+		: program(-1),
+		  mat_camera(-1),
+		  mat_modelTransform(-1),
+		  mat_projection(-1),
+		  mat_normal(-1),
+		  vertex(-1),
+		  color(-1),
+		  normal(-1),
+		  sun(-1),
+		  ambient(-1),
+		  eye(-1),
+		  vertexBuffer(-1),
+		  colorBuffer(-1),
+		  normalBuffer(-1),
+		  indexBuffer(-1)
+	{}
+	~Shader()
+	{}
 
 	bool Init(char* vsFile, char* fsFile);
 	void Enable();
 
 private:
+	void BindUniforms();
+	void BindArrayObjects();
+	void BindBufferObjects();
 	GLint SetShaderSource(char* filename, GLenum type);
 	void PrintLog(char* label, GLint obj);
 };

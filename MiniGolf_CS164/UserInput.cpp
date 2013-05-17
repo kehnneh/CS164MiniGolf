@@ -3,14 +3,14 @@
 #include "UserInput.h"
 #include "BaseCamera.h"
 
-UserInput::UserInput()
+void UserInput::Init()
 {
-	camera = 0;
-	for (int i=0;i<256;i++) m_keys[i] = false;
+	memset(&m_keys, 0, 256 * sizeof(bool));
 }
 
-UserInput::~UserInput()
+void UserInput::DeInit()
 {
+	camera = 0;
 }
 
 void UserInput::PressKey(unsigned char key)

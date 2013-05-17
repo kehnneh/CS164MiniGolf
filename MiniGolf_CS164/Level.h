@@ -17,11 +17,16 @@ private:
 	glm::vec4 ambientLight;
 
 public:
-	Level();
-	~Level();
+	Level()
+		: lightDir(glm::vec3(5.f, 10.f, 0.f)),
+		  ambientLight(glm::vec4(.2f, .2f, .2f, 1.f))
+	{}
+	~Level()
+	{}
 
 	void Render(BaseCamera* camera, Shader* shader);
 
 	bool Init(std::string filename);
+	void DeInit();
 };
 
