@@ -10,17 +10,28 @@ private:
 
 	bool bProjectionUpdate, bMatrixUpdate;
 
-	void Maketrix(bool& update, void(BaseCamera::*)(void));
+	void Maketrix(bool& update, void (BaseCamera::*)());
 
 	void ProjectionMatrix();
 
 protected:
+	// Static constants need to be defined in the class's source file.
+	// See BaseCamera.cpp for initialization.
+	// These particular values will *never* change. They are relative to the World.
+	static const glm::vec3 _origin, _xaxis, _yaxis, _zaxis;
+
+	// This is the direction which the Camera faces after InitMatrix() is called
+	glm::vec3 _direction;
+
+	// The matrix field will end up looking like the following matrix.
 	// X.x Y.x Z.x  0
 	// X.y Y.y Z.y  0
 	// X.z Y.z Z.z  0
 	//  0   0   0   1
 	glm::mat4 *matrix;
 	glm::mat4 *projection;
+
+	virtual void SetupPipeline();// = 0;
 
 	// *matrix = glm::lookAt(eye, target, up)
 	glm::vec3 eye, target, up;
@@ -61,6 +72,7 @@ public:
 
 	void IncYaw(float degrees);
 	void IncPitch(float degrees);
+	void IncRoll(float degrees);
 
 	void MoveForward(float distance);
 	void MoveLeft(float distance);

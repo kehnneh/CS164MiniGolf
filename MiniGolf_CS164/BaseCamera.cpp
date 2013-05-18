@@ -10,11 +10,13 @@ static float fovy = 45.f,
 			 znear = 0.1f,
 			 zfar = 10000.f;
 
-static const glm::vec3 ORIGIN(0.f, 0.f, 0.f);
-static const glm::vec3 DEFAULTDIR(0.f, 0.f, 1.f);
-static const glm::vec3 XAXIS(1.f, 0.f, 0.f);
-static const glm::vec3 YAXIS(0.f, 1.f, 0.f);
-static const glm::vec3 ZAXIS(0.f, 0.f, 1.f);
+// Constant data initialization
+const glm::vec3 BaseCamera::_origin(0.f, 0.f, 0.f);
+const glm::vec3 BaseCamera::_xaxis(1.f, 0.f, 0.f);
+const glm::vec3 BaseCamera::_yaxis(0.f, 1.f, 0.f);
+const glm::vec3 BaseCamera::_zaxis(0.f, 0.f, 1.f);
+
+glm::vec3 BaseCamera::_direction(0.f, 0.f, 1.f);
 
 static const float pitch_limit = 90.f;
 static const float backup = -5.f;
@@ -24,11 +26,19 @@ void BaseCamera::Init()
 {
 	matrix = new glm::mat4;
 	projection = new glm::mat4;
+
+	//SetupPipeline();
+
 	_pipeline.push_back(&BaseCamera::InitMatrix);
 	_pipeline.push_back(&BaseCamera::RotateX);
 	_pipeline.push_back(&BaseCamera::RotateY);
 	_pipeline.push_back(&BaseCamera::TranslateToTarget);
 	_pipeline.push_back(&BaseCamera::ThirdPerson);
+}
+
+void BaseCamera::SetupPipeline()
+{
+
 }
 
 void BaseCamera::DeInit()
@@ -39,7 +49,7 @@ void BaseCamera::DeInit()
 
 void BaseCamera::ProjectionMatrix() { *projection = glm::perspective(fovy, aspect, znear, zfar); }
 
-void BaseCamera::InitMatrix() {	*matrix = glm::lookAt(ORIGIN, DEFAULTDIR, up); }
+void BaseCamera::InitMatrix() {	*matrix = glm::lookAt(_origin, _direction, up); }
 
 // Grab the Camera's z-axis vector and move negatively along it
 void BaseCamera::ThirdPerson() { *matrix = glm::translate(*matrix, (*matrix)[0].z * backup, (*matrix)[1].z * backup, (*matrix)[2].z * backup); }
@@ -48,6 +58,11 @@ void BaseCamera::ThirdPerson() { *matrix = glm::translate(*matrix, (*matrix)[0].
 // Here, target is the fixed point to rotate about
 void BaseCamera::TranslateToTarget() { *matrix = glm::translate(*matrix, target); }
 
+// Executes the Camera's pipeline of instructions. Typically this is something like the following:
+// - Default matrix initializaion
+// - Rotation (typically in XYZ order)
+// - Translation to point of interest
+// - Move the camera back, as if in Third Person
 void BaseCamera::Matrix()
 {
 	for (std::vector<void(BaseCamera::*)()>::iterator it = _pipeline.begin(); it != _pipeline.end(); ++it)
@@ -94,7 +109,8 @@ void BaseCamera::SetFarPlane(float z)
 	bProjectionUpdate = true;
 }
 
-// Increments the Yaw (Y-Rotation) by the specified amount in degrees
+// Increments the Yaw (Y-Rotation) by the specified amount in degrees, then
+// flags the Camera matrix for updating
 void BaseCamera::IncYaw(float degrees)
 {
 	yaw += degrees;
@@ -111,7 +127,8 @@ void BaseCamera::IncYaw(float degrees)
 	bMatrixUpdate = true;
 }
 
-// Increments the Pitch (X-Rotation) by the specified amount in degrees
+// Increments the Pitch (X-Rotation) by the specified amount in degrees, then
+// flags the Camera matrix for updating
 void BaseCamera::IncPitch(float degrees)
 {
 	pitch += degrees;
@@ -128,12 +145,33 @@ void BaseCamera::IncPitch(float degrees)
 	bMatrixUpdate = true;
 }
 
-// Rotates the Camera around the X-Axis by the Camera's Pitch value
-void BaseCamera::RotateX() { *matrix = glm::rotate(*matrix, pitch, XAXIS); }
+// Increments the Roll (Z-Rotation) by the specified amount in degrees, then
+// flags the Camera matrix for updating
+void BaseCamera::IncRoll(float degrees)
+{
+	roll += degrees;
+	
+	if (roll > 360.f)
+	{
+		roll -= 360.f;
+	}
+	else if (roll < 0.f)
+	{
+		roll += 360.f;
+	}
 
-// Rotates the Camera around the Y-Axis by the Camera's Yaw value
-void BaseCamera::RotateY() { *matrix = glm::rotate(*matrix, yaw, YAXIS); }
+	bMatrixUpdate = true;
+}
+
+// Rotates the Camera around its X-Axis by the Camera's Pitch value
+void BaseCamera::RotateX() { *matrix = glm::rotate(*matrix, pitch, _xaxis); }
+
+// Rotates the Camera around its Y-Axis by the Camera's Yaw value
+void BaseCamera::RotateY() { *matrix = glm::rotate(*matrix, yaw, _yaxis); }
 //*matrix = glm::rotate(yaw, YAXIS) * *matrix; // free look!
+
+// Rotates the Camera around its Z-Axis by the Camera's Yaw value
+void BaseCamera::RotateZ() { *matrix = glm::rotate(*matrix, roll, _zaxis); }
 
 // Translates along the Camera's z-axis.
 void BaseCamera::MoveForward(float distance)
