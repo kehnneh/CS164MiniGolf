@@ -25,15 +25,15 @@ void Renderable::BindShader(Shader* shader)
 	activeShader = shader;
 }
 
-void Renderable::GenerateColor()
+void Renderable::GenerateColor(glm::vec4 colorStored)
 {
 	colorData = new glm::vec4[vertices];
 
 	for (unsigned int i = 0; i < vertices; i++)
 	{
-		colorData[i].r = .8f;
-		colorData[i].g = .0f;
-		colorData[i].b = .8f;
+		colorData[i].r = colorStored.x;
+		colorData[i].g = colorStored.y;
+		colorData[i].b = colorStored.z;
 		colorData[i].a = 1.f;
 	}
 }
@@ -139,7 +139,7 @@ bool Renderable::Init(char* filename)
 	}
 
 	fin.close();
-	GenerateColor();
+	GenerateColor(glm::vec4(.8f, .0f, .8f, 1.f));
 	GenerateNormals();
 	return true;
 }
@@ -151,7 +151,7 @@ bool Renderable::Init(glm::vec3* vertData, unsigned int numVerts)
 	vertices = numVerts;
 	vertexData = vertData;
 	TriangulateVertices();
-	GenerateColor();
+	GenerateColor(glm::vec4(.0f, 1.f, .0f, 1.f));
 	GenerateNormals();
 	return true;
 }

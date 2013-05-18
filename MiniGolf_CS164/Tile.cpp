@@ -17,19 +17,6 @@ bool Tile::SetNeighbor(unsigned short edgeId, unsigned short neighborTileId)
 	return false;
 }
 
-void Tile::GenerateColor()
-{
-	colorData = new glm::vec4[vertices];
-
-	for (unsigned int i = 0; i < vertices; i++)
-	{
-		colorData[i].r = .0f;
-		colorData[i].g = 1.f;
-		colorData[i].b = .0f;
-		colorData[i].a = 1.f;
-	}
-}
-
 void Tile::Finalize()
 {
 	// check each neighbor
@@ -54,6 +41,7 @@ void Tile::Finalize()
 				// log error
 			}
 
+			r->GenerateColor(glm::vec4(1.f, .0f, .0f, 1.f));
 			borders.push_back(r);
 		}
 	}
