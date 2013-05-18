@@ -82,6 +82,7 @@
   <ItemGroup>
     <ClCompile Include="ArcballCamera.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FreelookCamera.cpp" />
     <ClCompile Include="Kengine.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="ArcballCamera.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonUtils.h" />
+    <ClInclude Include="FreelookCamera.h" />
     <ClInclude Include="Kengine.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Projection.h" />
