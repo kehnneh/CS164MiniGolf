@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Camera">
+      <UniqueIdentifier>{f1a279d4-b796-430c-b4fa-b8ab109db2f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{7908276b-cf8e-4dc1-8c87-f253c05fe33f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -37,10 +43,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BaseCamera.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Projection.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,10 +72,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BaseCamera.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Projection.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

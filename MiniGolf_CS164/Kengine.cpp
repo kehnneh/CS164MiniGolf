@@ -4,6 +4,7 @@
 #include "CommonUtils.h"
 #include "BaseCamera.h"
 #include "Level.h"
+#include "Projection.h"
 
 static Kengine *kengine = 0;
 
@@ -31,10 +32,13 @@ void display()
 
 void Tick(int value)
 {
+	kengine->_projection->Tick();
+
 	// Send new values to the shaders
 	glUniform3fv(kengine->shader->eye, 1, (GLfloat*) kengine->c->GetPosition());
 	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->c->GetMatrix());//kengine->camera->GetMatrix());
-	glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->c->GetProjectionMatrix());
+	//glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->c->GetProjectionMatrix());
+	glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->_projection->Matrix());
 
 	// Handle user input
 	kengine->userInput->Tick();
@@ -88,6 +92,14 @@ bool Kengine::Init(int argc, char** argv)
 
 	c = new BaseCamera;
 	c->Init();
+
+	_projection = new Projection;
+	_projection->Init();
+	_projection->fovy(45.f);
+	_projection->znear(0.1f);
+	_projection->zfar(10000.f);
+	_projection->screenWidth(640);
+	_projection->screenHeight(480);
 
 	userInput = new UserInput;
 	userInput->BindCamera(c);

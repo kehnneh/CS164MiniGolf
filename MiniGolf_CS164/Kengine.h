@@ -5,6 +5,7 @@
 class UserInput;
 class Shader;
 class Level;
+class Projection;
 
 class Kengine
 {
@@ -18,6 +19,7 @@ public:
 	Shader *shader;
 
 	UserInput *userInput;
+	Projection *_projection;
 	BaseCamera *c;
 	Level *level;
 
