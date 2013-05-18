@@ -63,6 +63,8 @@ void UserInput::Tick()
 	{
 		camera->MoveLeft(-.25f);
 	}
+	// Until the Camera moves along the World's X/Z plane, MoveForward is not going to work as desired
+	
 	else if (IsKeyPressed('z'))
 	{
 		camera->MoveForward(.25f);
@@ -71,4 +73,5 @@ void UserInput::Tick()
 	{
 		camera->MoveForward(-.25f);
 	}
+	
 }

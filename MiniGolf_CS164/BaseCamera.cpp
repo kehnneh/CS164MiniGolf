@@ -16,8 +16,6 @@ const glm::vec3 BaseCamera::_xaxis(1.f, 0.f, 0.f);
 const glm::vec3 BaseCamera::_yaxis(0.f, 1.f, 0.f);
 const glm::vec3 BaseCamera::_zaxis(0.f, 0.f, 1.f);
 
-glm::vec3 BaseCamera::_direction(0.f, 0.f, 1.f);
-
 static const float pitch_limit = 90.f;
 static const float backup = -5.f;
 
