@@ -1,7 +1,7 @@
 #include <gl\freeglut.h>
 
 #include "UserInput.h"
-#include "BaseCamera.h"
+#include "Camera.h"
 
 void UserInput::Init()
 {
@@ -28,7 +28,7 @@ bool UserInput::IsKeyPressed(unsigned char key)
 	return m_keys[key];
 }
 
-void UserInput::BindCamera(BaseCamera* c)
+void UserInput::BindCamera(Camera* c)
 {
 	camera = c;
 }

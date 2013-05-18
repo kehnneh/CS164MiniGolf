@@ -1,6 +1,6 @@
 #include "Level.h"
 #include "Renderable.h"
-#include "BaseCamera.h"
+#include "Camera.h"
 #include "Shader.h"
 
 void Level::DeInit()
@@ -14,7 +14,7 @@ void Level::DeInit()
 	}
 }
 
-void Level::Render(BaseCamera* camera, Shader* shader)
+void Level::Render(Camera* camera, Shader* shader)
 {	
 	glUniform4fv(shader->ambient, 1, (GLfloat*) &ambientLight);
 	glUniform3fv(shader->sun, 1, (GLfloat*) &lightDir);

@@ -80,7 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BaseCamera.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Kengine.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
@@ -91,7 +91,7 @@
     <ClCompile Include="UserInput.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseCamera.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CommonUtils.h" />
     <ClInclude Include="Kengine.h" />
     <ClInclude Include="Level.h" />

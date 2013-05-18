@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "UserInput.h"
 #include "CommonUtils.h"
-#include "BaseCamera.h"
+#include "Camera.h"
 #include "Level.h"
 #include "Projection.h"
 
@@ -36,8 +36,7 @@ void Tick(int value)
 
 	// Send new values to the shaders
 	glUniform3fv(kengine->shader->eye, 1, (GLfloat*) kengine->c->GetPosition());
-	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->c->GetMatrix());//kengine->camera->GetMatrix());
-	//glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->c->GetProjectionMatrix());
+	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->c->Matrix());//kengine->camera->GetMatrix());
 	glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->_projection->Matrix());
 
 	// Handle user input
@@ -90,7 +89,7 @@ bool Kengine::Init(int argc, char** argv)
 	// Set the Renderable class to use the shader
 	Renderable::BindShader(shader);
 
-	c = new BaseCamera;
+	c = new Camera;
 	c->Init();
 
 	_projection = new Projection;

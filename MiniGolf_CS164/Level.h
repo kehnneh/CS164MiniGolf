@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include "Tile.h"
-#include "BaseCamera.h"
+#include "Camera.h"
 
 class Level
 {
@@ -24,7 +24,7 @@ public:
 	~Level()
 	{}
 
-	void Render(BaseCamera* camera, Shader* shader);
+	void Render(Camera* camera, Shader* shader);
 
 	bool Init(std::string filename);
 	void DeInit();

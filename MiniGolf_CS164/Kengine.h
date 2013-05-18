@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseCamera.h"
+#include "Camera.h"
 
 class UserInput;
 class Shader;
@@ -20,7 +20,7 @@ public:
 
 	UserInput *userInput;
 	Projection *_projection;
-	BaseCamera *c;
+	Camera *c;
 	Level *level;
 
 	Kengine()

@@ -6,7 +6,7 @@
 #include <glm\gtx\transform.hpp>
 
 class Shader;
-class BaseCamera;
+class Camera;
 
 class Renderable
 {
@@ -56,7 +56,7 @@ public:
 
 	void DeInit();
 
-	void Render(BaseCamera* c);
+	void Render(Camera* c);
 
 	void UniformScale(float factor);
 	void SetPosition(glm::vec3 pos);
