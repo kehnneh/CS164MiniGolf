@@ -10,18 +10,25 @@ static float fovy = 45.f,
 			 znear = 0.1f,
 			 zfar = 10000.f;
 
+static const glm::vec3 ORIGIN(0.f, 0.f, 0.f);
+static const glm::vec3 DEFAULTDIR(0.f, 0.f, 1.f);
 static const glm::vec3 XAXIS(1.f, 0.f, 0.f);
 static const glm::vec3 YAXIS(0.f, 1.f, 0.f);
 static const glm::vec3 ZAXIS(0.f, 0.f, 1.f);
 
 static const float pitch_limit = 90.f;
-static const float scale = 6.f;
+static const float backup = -5.f;
 
 // Performs memory allocation!
 void BaseCamera::Init()
 {
 	matrix = new glm::mat4;
 	projection = new glm::mat4;
+	_pipeline.push_back(&BaseCamera::InitMatrix);
+	_pipeline.push_back(&BaseCamera::RotateX);
+	_pipeline.push_back(&BaseCamera::RotateY);
+	_pipeline.push_back(&BaseCamera::TranslateToTarget);
+	_pipeline.push_back(&BaseCamera::ThirdPerson);
 }
 
 void BaseCamera::DeInit()
@@ -30,26 +37,23 @@ void BaseCamera::DeInit()
 	SAFE_DELETE(projection);
 }
 
-void BaseCamera::ProjectionMatrix()
-{
-	*projection = glm::perspective(fovy, aspect, znear, zfar);
-}
+void BaseCamera::ProjectionMatrix() { *projection = glm::perspective(fovy, aspect, znear, zfar); }
+
+void BaseCamera::InitMatrix() {	*matrix = glm::lookAt(ORIGIN, DEFAULTDIR, up); }
+
+// Grab the Camera's z-axis vector and move negatively along it
+void BaseCamera::ThirdPerson() { *matrix = glm::translate(*matrix, (*matrix)[0].z * backup, (*matrix)[1].z * backup, (*matrix)[2].z * backup); }
+
+// Translates the camera such that it is positioned at the fixed point
+// Here, target is the fixed point to rotate about
+void BaseCamera::TranslateToTarget() { *matrix = glm::translate(*matrix, target); }
 
 void BaseCamera::Matrix()
 {
-	// Initialize the matrix at the origin
-	*matrix = glm::lookAt(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f), up);
-	// Perform rotations at the origin
-	*matrix = glm::rotate(*matrix, pitch, XAXIS);
-	*matrix = glm::rotate(*matrix, yaw, YAXIS);
-
-	// Translates the camera such that it is positioned at the fixed point
-	// Here, target is the fixed point to rotate about
-	*matrix = glm::translate(*matrix, target);
-
-	// Grab the Camera's z-axis vector and move negatively along it
-	glm::vec3 z_late((*matrix)[0].z, (*matrix)[1].z, (*matrix)[2].z);
-	*matrix = glm::translate(*matrix, z_late * -5.f);
+	for (std::vector<void(BaseCamera::*)()>::iterator it = _pipeline.begin(); it != _pipeline.end(); ++it)
+	{
+		(this->*(*it))();
+	}
 }
 
 // Checks to see if the particular matrix needs updating, and then updates it
@@ -125,71 +129,84 @@ void BaseCamera::IncPitch(float degrees)
 }
 
 // Rotates the Camera around the X-Axis by the Camera's Pitch value
-void BaseCamera::RotateX()
-{
-	*matrix = glm::rotate(*matrix, pitch, XAXIS);
-}
+void BaseCamera::RotateX() { *matrix = glm::rotate(*matrix, pitch, XAXIS); }
 
 // Rotates the Camera around the Y-Axis by the Camera's Yaw value
-void BaseCamera::RotateY()
+void BaseCamera::RotateY() { *matrix = glm::rotate(*matrix, yaw, YAXIS); }
+//*matrix = glm::rotate(yaw, YAXIS) * *matrix; // free look!
+
+// Translates along the Camera's z-axis.
+void BaseCamera::MoveForward(float distance)
 {
-	*matrix = glm::rotate(*matrix, yaw, YAXIS);
-	//*matrix = glm::rotate(yaw, YAXIS) * *matrix; // free look!
+	target.x += (*matrix)[0].z * distance;
+	target.y += (*matrix)[1].z * distance;
+	target.z += (*matrix)[2].z * distance;
+
+	eye.x += (*matrix)[0].z * distance;
+	eye.y += (*matrix)[1].z * distance;
+	eye.z += (*matrix)[2].z * distance;
+
+	bMatrixUpdate = true;
 }
 
-// Translates along the Camera's X-Axis
+// Translates along the Camera's x-axis
+// 'Right' in the lookAt matrix is actually defined as 'Left'
+void BaseCamera::MoveLeft(float distance)
+{
+	target.x += (*matrix)[0].x * distance;
+	target.y += (*matrix)[1].x * distance;
+	target.z += (*matrix)[2].x * distance;
+
+	eye.x += (*matrix)[0].x * distance;
+	eye.y += (*matrix)[1].x * distance;
+	eye.z += (*matrix)[2].x * distance;
+
+	bMatrixUpdate = true;
+}
+
+// Translates along the Camera's y-axis
+void BaseCamera::MoveUp(float distance)
+{
+	target.x += (*matrix)[0].x * distance;
+	target.y += (*matrix)[1].x * distance;
+	target.z += (*matrix)[2].x * distance;
+
+	eye.x += (*matrix)[0].x * distance;
+	eye.y += (*matrix)[1].x * distance;
+	eye.z += (*matrix)[2].x * distance;
+
+	bMatrixUpdate = true;
+}
+
+// Translates along the World's x-axis.
 void BaseCamera::TranslateX(float distance)
 {
-	glm::vec3 x_late((*matrix)[0].x, (*matrix)[1].x, (*matrix)[2].x);
-
-	target -= x_late * distance;
-	eye -= x_late * distance;
+	target.x += distance;
+	eye.x += distance;
 
 	bMatrixUpdate = true;
 }
 
-// Translates along the Camera's Y-Axis
+// Translates along the World's y-Axis
 void BaseCamera::TranslateY(float distance)
 {
+	target.y += distance;
+	eye.y += distance;
+
 	bMatrixUpdate = true;
 }
 
-// Translates along the Camera's Z-axis
+// Translates along the World's z-axis
 void BaseCamera::TranslateZ(float distance)
 {
+	target.z += distance;
+	eye.z += distance;
+
 	bMatrixUpdate = true;
 }
 
-// Translate differs depending on the kind of camera. For instance,
-// Arcball cameras translate along their negative z-axis, while
-// Freelook cameras
-void BaseCamera::Translate()
-{
-	// Translate in the direction (0, 0, -1) relative to the Camera's ZAXIS
-	glm::vec3 z_late((*matrix)[0].z, (*matrix)[1].z, (*matrix)[2].z);
-	glm::vec3 y_late((*matrix)[0].y, (*matrix)[1].y, (*matrix)[2].y);
-	glm::vec3 x_late((*matrix)[0].x, (*matrix)[1].x, (*matrix)[2].x);
+glm::mat4 *BaseCamera::GetMatrix() { return matrix; }
 
-	//eye = (x_late * translation.x) + (y_late * translation.y) + (z_late * translation.z);
+glm::mat4 *BaseCamera::GetProjectionMatrix() { return projection; }
 
-	z_late.y = 0.f;
-	//target = (x_late * translation.x) + (y_late * translation.y) + (z_late);
-
-	*matrix = glm::translate(*matrix, -eye);
-	//*matrix = glm::translate(-eye) * *matrix;
-}
-
-glm::mat4 *BaseCamera::GetMatrix()
-{
-	return matrix;
-}
-
-glm::mat4 *BaseCamera::GetProjectionMatrix()
-{
-	return projection;
-}
-
-glm::vec3 *BaseCamera::GetPosition()
-{
-	return &eye;
-}
+glm::vec3 *BaseCamera::GetPosition() { return &eye; }

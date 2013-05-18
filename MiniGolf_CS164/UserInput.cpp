@@ -57,18 +57,18 @@ void UserInput::Tick()
 	}
 	else if (IsKeyPressed('a'))
 	{
-		camera->TranslateX(-.25f);
+		camera->MoveLeft(.25f);
 	}
 	else if (IsKeyPressed('d'))
 	{
-		camera->TranslateX(.25f);
+		camera->MoveLeft(-.25f);
 	}
 	else if (IsKeyPressed('z'))
 	{
-		camera->TranslateZ(.25f);
+		camera->MoveForward(.25f);
 	}
 	else if (IsKeyPressed('x'))
 	{
-		camera->TranslateZ(-.25f);
+		camera->MoveForward(-.25f);
 	}
 }
