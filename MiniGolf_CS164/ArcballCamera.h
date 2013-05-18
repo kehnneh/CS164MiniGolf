@@ -5,7 +5,7 @@
 class ArcballCamera : public Camera
 {
 protected:
-	void SetupPipeline();
+	void ConstructMatrix();
 
 	void RotateX();
 	void RotateY();

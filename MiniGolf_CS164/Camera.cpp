@@ -18,8 +18,6 @@ static const float backup = -5.f;
 void Camera::Init()
 {
 	_mat = new glm::mat4;
-
-	SetupPipeline();
 }
 
 void Camera::DeInit()
@@ -41,10 +39,7 @@ void Camera::Tick()
 {
 	if (_bMatrixUpdate)
 	{
-		for (std::vector<void(Camera::*)()>::iterator it = _pipeline.begin(); it != _pipeline.end(); ++it)
-		{
-			(this->*(*it))();
-		}
+		ConstructMatrix();
 		_bMatrixUpdate = false;
 	}
 }
@@ -104,14 +99,14 @@ void Camera::IncRoll(float degrees)
 }
 
 // Rotates the Camera around its X-Axis by the Camera's Pitch value
-void Camera::RotateX() { *_mat = glm::rotate(*_mat, _pitch, _xaxis); }
+//void Camera::RotateX() { *_mat = glm::rotate(*_mat, _pitch, _xaxis); }
 
 // Rotates the Camera around its Y-Axis by the Camera's Yaw value
-void Camera::RotateY() { *_mat = glm::rotate(*_mat, _yaw, _yaxis); }
+//void Camera::RotateY() { *_mat = glm::rotate(*_mat, _yaw, _yaxis); }
 //*matrix = glm::rotate(yaw, YAXIS) * *matrix; // free look!
 
 // Rotates the Camera around its Z-Axis by the Camera's Yaw value
-void Camera::RotateZ() { *_mat = glm::rotate(*_mat, _roll, _zaxis); }
+//void Camera::RotateZ() { *_mat = glm::rotate(*_mat, _roll, _zaxis); }
 
 // Translates along the Camera's z-axis.
 void Camera::MoveForward(float distance)

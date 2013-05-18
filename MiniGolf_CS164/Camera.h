@@ -1,13 +1,11 @@
 #pragma once
 
 #include <glm\glm.hpp>
-#include <vector>
+//#include <vector>
 
 class Camera
 {
 protected:
-	std::vector<void(Camera::*)()> _pipeline;
-
 	bool _bMatrixUpdate;
 
 	// Static constants need to be defined in the class's source file.
@@ -25,18 +23,18 @@ protected:
 	//  0   0   0   1
 	glm::mat4 *_mat;
 
-	// Sets up the Camera's pipeline of instructions. Typically this is something like the following:
-	// - Default matrix initializaion
-	// - Rotation (typically in XYZ order)
-	// - Translation to point of interest
-	// - Move the camera back, as if in Third Person
-	virtual void SetupPipeline() = 0;
-
 	// Camera position information
 	glm::vec3 _eye, _target, _up;
 
 	// Camera rotation information. TODO: consider using quaternions with this data! :)
 	float _pitch, _yaw, _roll;
+
+	// Sets up the Camera's pipeline of instructions. Typically this is something like the following:
+	// - Default matrix initializaion
+	// - Rotation (typically in XYZ order)
+	// - Translation to point of interest
+	// - Move the camera back, as if in Third Person
+	virtual void ConstructMatrix() = 0;
 
 	// TopDownCamera::InitMatrix will need to override this such that _up and _direction are different
 	virtual void InitMatrix();
@@ -44,6 +42,7 @@ protected:
 	void ThirdPerson();
 	void TranslateToTarget();
 
+	// Leave implementation up to the type of camera
 	virtual void RotateX() = 0;
 	virtual void RotateY() = 0;
 	virtual void RotateZ() = 0;

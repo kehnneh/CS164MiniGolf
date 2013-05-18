@@ -1,17 +1,42 @@
 #include "ArcballCamera.h"
 
-void ArcballCamera::SetupPipeline()
-{
-	_pipeline.push_back(&Camera::InitMatrix);
-	_pipeline.push_back(&Camera::RotateX);
-	_pipeline.push_back(&Camera::RotateY);
-	// No rolling around here
-	// _pipeline.push_back(&Camera::RotateZ);
-	_pipeline.push_back(&Camera::TranslateToTarget);
-	_pipeline.push_back(&Camera::ThirdPerson);
-}
+#include <glm\gtc\matrix_transform.hpp>
 
 void ArcballCamera::RotateX()
 {
+	*_mat = glm::rotate(*_mat, _pitch, _xaxis);
+}
 
+// Freelook can be achieved with:
+// *_mat = glm::rotate(_yaw, _yaxis) * *_mat;
+void ArcballCamera::RotateY()
+{
+	*_mat = glm::rotate(*_mat, _yaw, _yaxis);
+}
+
+void ArcballCamera::RotateZ()
+{
+	*_mat = glm::rotate(*_mat, _roll, _zaxis);
+}
+
+void ArcballCamera::MoveForward(float distance)
+{
+	_target.x += (*_mat)[0].z * distance;
+	_target.z += (*_mat)[2].z * distance;
+
+	_eye.x += (*_mat)[0].z * distance;
+	_eye.z += (*_mat)[2].z * distance;
+
+	_bMatrixUpdate = true;
+}
+
+void ArcballCamera::ConstructMatrix()
+{
+	InitMatrix();
+	RotateX();
+	RotateY();
+	// No rolling around here
+	// _pipeline.push_back(&Camera::RotateZ);
+	TranslateToTarget();
+	ThirdPerson();
 }
