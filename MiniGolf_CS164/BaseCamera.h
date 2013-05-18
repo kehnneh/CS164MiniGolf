@@ -28,8 +28,7 @@ protected:
 	float pitch, yaw;
 	const float roll;
 
-	// This gets implemented in inherited classes
-	virtual void Matrix();
+	void Matrix();
 	virtual void InitMatrix();
 
 	void ThirdPerson();
