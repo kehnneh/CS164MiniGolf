@@ -34,6 +34,8 @@ void Camera::ThirdPerson() { *_mat = glm::translate(*_mat, (*_mat)[0].z * backup
 // Here, target is the fixed point to rotate about
 void Camera::TranslateToTarget() { *_mat = glm::translate(*_mat, _target); }
 
+void Camera::TranslateToEye() { *_mat = glm::translate(*_mat, _eye); }
+
 // Get's called every time Kengine::Tick() is called
 void Camera::Tick()
 {
@@ -97,16 +99,6 @@ void Camera::IncRoll(float degrees)
 
 	_bMatrixUpdate = true;
 }
-
-// Rotates the Camera around its X-Axis by the Camera's Pitch value
-//void Camera::RotateX() { *_mat = glm::rotate(*_mat, _pitch, _xaxis); }
-
-// Rotates the Camera around its Y-Axis by the Camera's Yaw value
-//void Camera::RotateY() { *_mat = glm::rotate(*_mat, _yaw, _yaxis); }
-//*matrix = glm::rotate(yaw, YAXIS) * *matrix; // free look!
-
-// Rotates the Camera around its Z-Axis by the Camera's Yaw value
-//void Camera::RotateZ() { *_mat = glm::rotate(*_mat, _roll, _zaxis); }
 
 // Translates along the Camera's z-axis.
 void Camera::MoveForward(float distance)

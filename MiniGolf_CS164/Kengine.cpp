@@ -6,6 +6,7 @@
 #include "Level.h"
 #include "Projection.h"
 #include "ArcballCamera.h"
+#include "FreelookCamera.h"
 
 static Kengine *kengine = 0;
 
@@ -90,7 +91,7 @@ bool Kengine::Init(int argc, char** argv)
 	// Set the Renderable class to use the shader
 	Renderable::BindShader(shader);
 
-	c = new ArcballCamera;
+	c = new FreelookCamera;
 	c->Init();
 
 	_projection = new Projection;

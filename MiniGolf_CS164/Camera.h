@@ -41,6 +41,7 @@ protected:
 
 	void ThirdPerson();
 	void TranslateToTarget();
+	void TranslateToEye();
 
 	// Leave implementation up to the type of camera
 	virtual void RotateX() = 0;

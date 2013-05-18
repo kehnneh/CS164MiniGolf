@@ -5,6 +5,8 @@
 class FreelookCamera : public Camera
 {
 protected:
+	void InitMatrix();
+
 	void ConstructMatrix();
 
 	void RotateX();

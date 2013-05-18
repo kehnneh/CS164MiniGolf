@@ -2,6 +2,12 @@
 
 #include <glm\gtx\transform.hpp>
 
+void FreelookCamera::InitMatrix()
+{
+	*_mat = glm::lookAt(_origin, _direction, _up);
+	//*_mat = glm::translate(_eye
+}
+
 void FreelookCamera::RotateX()
 {
 	*_mat = glm::rotate(_pitch, _xaxis) * *_mat;
@@ -19,5 +25,11 @@ void FreelookCamera::RotateZ()
 
 void FreelookCamera::ConstructMatrix()
 {
-
+	InitMatrix();
+	TranslateToEye();
+	//TranslateToTarget();
+	RotateX();
+	RotateY();
+	
+	ThirdPerson();
 }
