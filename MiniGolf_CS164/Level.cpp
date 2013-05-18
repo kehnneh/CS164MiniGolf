@@ -117,6 +117,7 @@ bool Level::Init(std::string filename)
 					return false;
 				}
 
+				r->GenerateColor(glm::vec4(.0f, .0f, .0f, 1.f));
 				others.push_back(r);
 			} 
 		} // End 't' 
@@ -150,6 +151,7 @@ bool Level::Init(std::string filename)
 				return false;
 			}
 
+			r->GenerateColor(glm::vec4(.0f, .0f, .0f, 1.f));
 			others.push_back(r);
 		} // End 'cup'
 		fin.get(c);
@@ -169,7 +171,7 @@ bool Level::Init(std::string filename)
 
 	ball->SetPosition(glm::vec3(teePos.x, teePos.y + 0.05, teePos.z));
 	ball->UniformScale(0.05f);
-	
+	ball->GenerateColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
 
 	return true;
 }

@@ -34,7 +34,6 @@ private:
 
 	void TriangulateVertices();
 	void GenerateNormals();
-	virtual void GenerateColor();
 
 public:
 	Renderable()
@@ -60,6 +59,8 @@ public:
 
 	void UniformScale(float factor);
 	void SetPosition(glm::vec3 pos);
+
+	virtual void GenerateColor(glm::vec4 colorStored);
 	
 	static void BindShader(Shader* s);
 };
