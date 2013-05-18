@@ -84,6 +84,7 @@
     <ClCompile Include="Kengine.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="CommonUtils.h" />
     <ClInclude Include="Kengine.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Projection.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Tile.h" />

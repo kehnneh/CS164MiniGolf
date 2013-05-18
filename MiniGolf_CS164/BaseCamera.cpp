@@ -22,8 +22,8 @@ static const float backup = -5.f;
 // Performs memory allocation!
 void BaseCamera::Init()
 {
-	matrix = new glm::mat4;
-	projection = new glm::mat4;
+	_matrix = new glm::mat4;
+	_projection = new glm::mat4;
 
 	//SetupPipeline();
 
@@ -41,20 +41,20 @@ void BaseCamera::SetupPipeline()
 
 void BaseCamera::DeInit()
 {
-	SAFE_DELETE(matrix);
-	SAFE_DELETE(projection);
+	SAFE_DELETE(_matrix);
+	SAFE_DELETE(_projection);
 }
 
-void BaseCamera::ProjectionMatrix() { *projection = glm::perspective(fovy, aspect, znear, zfar); }
+void BaseCamera::ProjectionMatrix() { *_projection = glm::perspective(fovy, aspect, znear, zfar); }
 
-void BaseCamera::InitMatrix() {	*matrix = glm::lookAt(_origin, _direction, up); }
+void BaseCamera::InitMatrix() {	*_matrix = glm::lookAt(_origin, _direction, _up); }
 
 // Grab the Camera's z-axis vector and move negatively along it
-void BaseCamera::ThirdPerson() { *matrix = glm::translate(*matrix, (*matrix)[0].z * backup, (*matrix)[1].z * backup, (*matrix)[2].z * backup); }
+void BaseCamera::ThirdPerson() { *_matrix = glm::translate(*_matrix, (*_matrix)[0].z * backup, (*_matrix)[1].z * backup, (*_matrix)[2].z * backup); }
 
 // Translates the camera such that it is positioned at the fixed point
 // Here, target is the fixed point to rotate about
-void BaseCamera::TranslateToTarget() { *matrix = glm::translate(*matrix, target); }
+void BaseCamera::TranslateToTarget() { *_matrix = glm::translate(*_matrix, _target); }
 
 // Executes the Camera's pipeline of instructions. Typically this is something like the following:
 // - Default matrix initializaion
@@ -85,164 +85,164 @@ void BaseCamera::Maketrix(bool& update, void (BaseCamera::*maketrix)(void))
 // Get's called every time Kengine::Tick() is called
 void BaseCamera::Tick()
 {
-	Maketrix(bProjectionUpdate, &BaseCamera::ProjectionMatrix);
-	Maketrix(bMatrixUpdate, &BaseCamera::Matrix);
+	Maketrix(_bProjectionUpdate, &BaseCamera::ProjectionMatrix);
+	Maketrix(_bMatrixUpdate, &BaseCamera::Matrix);
 }
 
 void BaseCamera::SetFOV(float fov)
 {
 	fovy = fov;
-	bProjectionUpdate = true;
+	_bProjectionUpdate = true;
 }
 
 void BaseCamera::SetScreenSize(float x, float y)
 {
 	aspect = x / y;
-	bProjectionUpdate = true;
+	_bProjectionUpdate = true;
 }
 
 void BaseCamera::SetFarPlane(float z)
 {
 	zfar = z;
-	bProjectionUpdate = true;
+	_bProjectionUpdate = true;
 }
 
 // Increments the Yaw (Y-Rotation) by the specified amount in degrees, then
 // flags the Camera matrix for updating
 void BaseCamera::IncYaw(float degrees)
 {
-	yaw += degrees;
+	_yaw += degrees;
 
-	if (yaw > 360.f)
+	if (_yaw > 360.f)
 	{
-		yaw -= 360.f;
+		_yaw -= 360.f;
 	}
-	else if (yaw < 0.f)
+	else if (_yaw < 0.f)
 	{
-		yaw += 360.f;
+		_yaw += 360.f;
 	}
 
-	bMatrixUpdate = true;
+	_bMatrixUpdate = true;
 }
 
 // Increments the Pitch (X-Rotation) by the specified amount in degrees, then
 // flags the Camera matrix for updating
 void BaseCamera::IncPitch(float degrees)
 {
-	pitch += degrees;
+	_pitch += degrees;
 
-	if (pitch > pitch_limit)
+	if (_pitch > pitch_limit)
 	{
-		pitch = 89.9f;
+		_pitch = 89.9f;
 	}
-	else if (pitch < -pitch_limit)
+	else if (_pitch < -pitch_limit)
 	{
-		pitch = -89.9f;
+		_pitch = -89.9f;
 	}
 
-	bMatrixUpdate = true;
+	_bMatrixUpdate = true;
 }
 
 // Increments the Roll (Z-Rotation) by the specified amount in degrees, then
 // flags the Camera matrix for updating
 void BaseCamera::IncRoll(float degrees)
 {
-	roll += degrees;
+	_roll += degrees;
 	
-	if (roll > 360.f)
+	if (_roll > 360.f)
 	{
-		roll -= 360.f;
+		_roll -= 360.f;
 	}
-	else if (roll < 0.f)
+	else if (_roll < 0.f)
 	{
-		roll += 360.f;
+		_roll += 360.f;
 	}
 
-	bMatrixUpdate = true;
+	_bMatrixUpdate = true;
 }
 
 // Rotates the Camera around its X-Axis by the Camera's Pitch value
-void BaseCamera::RotateX() { *matrix = glm::rotate(*matrix, pitch, _xaxis); }
+void BaseCamera::RotateX() { *_matrix = glm::rotate(*_matrix, _pitch, _xaxis); }
 
 // Rotates the Camera around its Y-Axis by the Camera's Yaw value
-void BaseCamera::RotateY() { *matrix = glm::rotate(*matrix, yaw, _yaxis); }
+void BaseCamera::RotateY() { *_matrix = glm::rotate(*_matrix, _yaw, _yaxis); }
 //*matrix = glm::rotate(yaw, YAXIS) * *matrix; // free look!
 
 // Rotates the Camera around its Z-Axis by the Camera's Yaw value
-void BaseCamera::RotateZ() { *matrix = glm::rotate(*matrix, roll, _zaxis); }
+void BaseCamera::RotateZ() { *_matrix = glm::rotate(*_matrix, _roll, _zaxis); }
 
 // Translates along the Camera's z-axis.
 void BaseCamera::MoveForward(float distance)
 {
-	target.x += (*matrix)[0].z * distance;
-	target.y += (*matrix)[1].z * distance;
-	target.z += (*matrix)[2].z * distance;
+	_target.x += (*_matrix)[0].z * distance;
+	_target.y += (*_matrix)[1].z * distance;
+	_target.z += (*_matrix)[2].z * distance;
 
-	eye.x += (*matrix)[0].z * distance;
-	eye.y += (*matrix)[1].z * distance;
-	eye.z += (*matrix)[2].z * distance;
+	_eye.x += (*_matrix)[0].z * distance;
+	_eye.y += (*_matrix)[1].z * distance;
+	_eye.z += (*_matrix)[2].z * distance;
 
-	bMatrixUpdate = true;
+	_bMatrixUpdate = true;
 }
 
 // Translates along the Camera's x-axis
 // 'Right' in the lookAt matrix is actually defined as 'Left'
 void BaseCamera::MoveLeft(float distance)
 {
-	target.x += (*matrix)[0].x * distance;
-	target.y += (*matrix)[1].x * distance;
-	target.z += (*matrix)[2].x * distance;
+	_target.x += (*_matrix)[0].x * distance;
+	_target.y += (*_matrix)[1].x * distance;
+	_target.z += (*_matrix)[2].x * distance;
 
-	eye.x += (*matrix)[0].x * distance;
-	eye.y += (*matrix)[1].x * distance;
-	eye.z += (*matrix)[2].x * distance;
+	_eye.x += (*_matrix)[0].x * distance;
+	_eye.y += (*_matrix)[1].x * distance;
+	_eye.z += (*_matrix)[2].x * distance;
 
-	bMatrixUpdate = true;
+	_bMatrixUpdate = true;
 }
 
 // Translates along the Camera's y-axis
 void BaseCamera::MoveUp(float distance)
 {
-	target.x += (*matrix)[0].x * distance;
-	target.y += (*matrix)[1].x * distance;
-	target.z += (*matrix)[2].x * distance;
+	_target.x += (*_matrix)[0].x * distance;
+	_target.y += (*_matrix)[1].x * distance;
+	_target.z += (*_matrix)[2].x * distance;
 
-	eye.x += (*matrix)[0].x * distance;
-	eye.y += (*matrix)[1].x * distance;
-	eye.z += (*matrix)[2].x * distance;
+	_eye.x += (*_matrix)[0].x * distance;
+	_eye.y += (*_matrix)[1].x * distance;
+	_eye.z += (*_matrix)[2].x * distance;
 
-	bMatrixUpdate = true;
+	_bMatrixUpdate = true;
 }
 
 // Translates along the World's x-axis.
 void BaseCamera::TranslateX(float distance)
 {
-	target.x += distance;
-	eye.x += distance;
+	_target.x += distance;
+	_eye.x += distance;
 
-	bMatrixUpdate = true;
+	_bMatrixUpdate = true;
 }
 
 // Translates along the World's y-Axis
 void BaseCamera::TranslateY(float distance)
 {
-	target.y += distance;
-	eye.y += distance;
+	_target.y += distance;
+	_eye.y += distance;
 
-	bMatrixUpdate = true;
+	_bMatrixUpdate = true;
 }
 
 // Translates along the World's z-axis
 void BaseCamera::TranslateZ(float distance)
 {
-	target.z += distance;
-	eye.z += distance;
+	_target.z += distance;
+	_eye.z += distance;
 
-	bMatrixUpdate = true;
+	_bMatrixUpdate = true;
 }
 
-glm::mat4 *BaseCamera::GetMatrix() { return matrix; }
+glm::mat4 *BaseCamera::GetMatrix() { return _matrix; }
 
-glm::mat4 *BaseCamera::GetProjectionMatrix() { return projection; }
+glm::mat4 *BaseCamera::GetProjectionMatrix() { return _projection; }
 
-glm::vec3 *BaseCamera::GetPosition() { return &eye; }
+glm::vec3 *BaseCamera::GetPosition() { return &_eye; }

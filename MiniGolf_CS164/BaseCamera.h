@@ -8,7 +8,7 @@ class BaseCamera
 private:
 	std::vector<void(BaseCamera::*)()> _pipeline;
 
-	bool bProjectionUpdate, bMatrixUpdate;
+	bool _bProjectionUpdate, _bMatrixUpdate;
 
 	void Maketrix(bool& update, void (BaseCamera::*)());
 
@@ -31,40 +31,38 @@ protected:
 	// X.y Y.y Z.y  0
 	// X.z Y.z Z.z  0
 	//  0   0   0   1
-	glm::mat4 *matrix;
+	glm::mat4 *_matrix;
 
 	/* Put the following block in a Projection class */
 	/////////////////////////////////////////
-	glm::mat4 *projection;
+	glm::mat4 *_projection;
 	/////////////////////////////////////////
 
 	virtual void SetupPipeline();// = 0;
 
-	glm::vec3 eye, target, up;
+	// Camera position information
+	glm::vec3 _eye, _target, _up;
 
-	float pitch, yaw, roll;
+	// Camera rotation information. Consider using Quaternions with this data! :)
+	float _pitch, _yaw, _roll;
 
 	void Matrix();
+	// TopDown::InitMatrix will need to override this such that _up and _direction are different
 	virtual void InitMatrix();
 
 	void ThirdPerson();
 	void TranslateToTarget();
 
-	void RotateX();
-	void RotateY();
-	void RotateZ();
+	virtual void RotateX();
+	virtual void RotateY();
+	virtual void RotateZ();
 
 public:
 	BaseCamera()
-	: pitch(-45.f),
-	  yaw(0.f),
-	  roll(0.f),
-	  bProjectionUpdate(true),
-	  bMatrixUpdate(true),
-	  _direction(0.f, 0.f, 1.f),
-	  eye(0.f, 0.f, 0.f),
-	  target(0.f, 0.f, 0.f),
-	  up(0.f, 1.f, 0.f)
+		: _pitch(-45.f), _yaw(0.f), _roll(0.f),
+	      _bProjectionUpdate(true), _bMatrixUpdate(true),
+	      _direction(0.f, 0.f, 1.f),
+	      _eye(0.f, 0.f, 0.f), _target(0.f, 0.f, 0.f), _up(0.f, 1.f, 0.f)
 	{}
 	virtual ~BaseCamera()
 	{}
