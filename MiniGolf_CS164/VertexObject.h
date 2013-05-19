@@ -17,6 +17,8 @@ public:
   void Init();
   void DeInit();
 
+  float Length() const;
+
   // Rotate
   
 

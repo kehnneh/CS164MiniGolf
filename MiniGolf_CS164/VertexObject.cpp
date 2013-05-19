@@ -14,6 +14,11 @@ void VertexObject::DeInit()
   SAFE_DELETE(_vert);
 }
 
+float VertexObject::Length() const
+{
+  return glm::length(*_vert);
+}
+
 void VertexObject::Increment(float x, float y, float z)
 {
   IncX(x);
