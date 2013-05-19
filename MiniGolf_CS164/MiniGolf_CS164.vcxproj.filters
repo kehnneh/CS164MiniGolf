@@ -54,6 +54,9 @@
     <ClCompile Include="FreelookCamera.cpp">
       <Filter>Source Files\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="MatrixObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kengine.h">
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="FreelookCamera.h">
       <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixObject.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
