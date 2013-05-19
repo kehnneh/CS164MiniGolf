@@ -88,6 +88,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatrixObject.cpp" />
+    <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -104,12 +105,17 @@
     <ClInclude Include="Kengine.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MatrixObject.h" />
+    <ClInclude Include="Moveable.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="UserInput.h" />
     <ClInclude Include="VertexObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="frag.glsl" />
+    <None Include="vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

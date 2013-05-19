@@ -31,12 +31,18 @@
     <Filter Include="Source Files\Core">
       <UniqueIdentifier>{53a3f1e3-f399-48ee-ae5d-45760bbc9283}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{f7ef5394-34f5-43c3-af85-564afe80467c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders\GLSL">
+      <UniqueIdentifier>{4e6549e2-08f5-40c3-8d47-815e50b03dd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shaders">
+      <UniqueIdentifier>{37a3772d-bacb-4bc1-84b5-cb658d30c19a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Renderable.cpp">
@@ -75,12 +81,15 @@
     <ClCompile Include="UserInput.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Moveable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderable.h">
@@ -119,5 +128,19 @@
     <ClInclude Include="UserInput.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Moveable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="frag.glsl">
+      <Filter>Source Files\Shaders\GLSL</Filter>
+    </None>
+    <None Include="vert.glsl">
+      <Filter>Source Files\Shaders\GLSL</Filter>
+    </None>
   </ItemGroup>
 </Project>

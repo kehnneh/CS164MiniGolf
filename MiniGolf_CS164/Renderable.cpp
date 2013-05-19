@@ -5,6 +5,7 @@
 #include "CommonUtils.h"
 #include "Camera.h"
 
+#include <glm\gtx\normal.hpp>
 #include <glm\gtc\matrix_inverse.hpp>
 
 #define USE_FLAT_SHADING
@@ -17,6 +18,7 @@ void Renderable::DeInit()
 	SAFE_DELETE(indexData);
 	SAFE_DELETE(colorData);
 	SAFE_DELETE(vertexData);
+  transform->DeInit();
 	SAFE_DELETE(transform);
 }
 
@@ -40,13 +42,17 @@ void Renderable::GenerateColor(glm::vec4 colorStored)
 
 void Renderable::UniformScale(float factor)
 {
-	scaleFactor = factor;
-	*transform = glm::scale(*transform, glm::vec3(scaleFactor, scaleFactor, scaleFactor));
+	transform->Scale(factor);
 }
 
 void Renderable::SetPosition(glm::vec3 pos)
 {
-	*transform = glm::translate(*transform, pos * scaleFactor);
+  transform->Position(pos);
+}
+
+void Renderable::Tick()
+{
+  transform->Tick();
 }
 
 // This is hacked. ifstream on Windows is piss poor
@@ -78,9 +84,14 @@ bool FileCount(char* filename, unsigned int& vertices, unsigned int& indices)
 }
 
 // Takes the filename of a *.obj file to load and constructs vertices, normals, and colors from it
+// Parametrize this such that the object read in can be toggled between
+// Left and Right handed systems (for DirectX and OpenGL, respectively).
+// Currently, it defaults to reading in a Right handed system, as
+// the application in question is written in OpenGL
 bool Renderable::Init(char* filename)
 {
-	transform = new glm::mat4;
+	transform = new MatrixObject;
+  transform->Init();
 
 	if (!FileCount(filename, vertices, indices))
 	{
@@ -116,7 +127,6 @@ bool Renderable::Init(char* filename)
 			if (c == ' ')
 			{
 				fin >> vertexData[vertexIndex].x >> vertexData[vertexIndex].y >> vertexData[vertexIndex].z;
-				//vertexData[vertexIndex].y *= -1.f;
 				vertexIndex++;
 			}
 		}
@@ -146,7 +156,8 @@ bool Renderable::Init(char* filename)
 
 bool Renderable::Init(glm::vec3* vertData, unsigned int numVerts)
 {
-	transform = new glm::mat4;
+	transform = new MatrixObject;
+  transform->Init();
 
 	vertices = numVerts;
 	vertexData = vertData;
@@ -159,6 +170,9 @@ bool Renderable::Init(glm::vec3* vertData, unsigned int numVerts)
 //
 // Ken thinks we should use GL_TRIANGLE_FAN
 // instead of GL_TRIANGLES
+// Ken has thought about this, and concluded that
+// GL_TRIANGLE_FAN is only applicable if every triangle
+// in the Renderable shares a common vertex
 //
 void Renderable::TriangulateVertices()
 {
@@ -190,11 +204,21 @@ void Renderable::GenerateNormals()
 
 	for (unsigned int i = 0; i < indices; i += 3)
 	{
+    // It's a shame I didn't scour the GLM implementation sooner:
+    // theres a built-in function for this!
+    /*
 		glm::vec3 a(vertexData[indexData[i]]),
 			      b(vertexData[indexData[i + 1]]),
 				  c(vertexData[indexData[i + 2]]);
 
 		glm::vec3 result = glm::normalize(glm::cross(b - a, c - a));
+    */
+    glm::vec3 result = glm::triangleNormal(
+      vertexData[indexData[i]],
+      vertexData[indexData[i + 1]],
+      vertexData[indexData[i + 2]]
+    );
+
 		normalData[indexData[i]] += result;
 		normalData[indexData[i + 1]] += result;
 		normalData[indexData[i + 2]] += result;
@@ -238,9 +262,11 @@ void Renderable::BindIndices()
 
 void Renderable::Render(Camera* c)
 {
-	glUniformMatrix4fv(activeShader->mat_modelTransform, 1, GL_FALSE, (GLfloat*) transform);
+  // Time to overload operators here such that we can use the MatrixObject class
+  // with standard algebraic operators!
+	glUniformMatrix4fv(activeShader->mat_modelTransform, 1, GL_FALSE, (GLfloat*) transform->Matrix());
 
-	glm::mat3 normalMat = glm::inverseTranspose(glm::mat3(*transform * *c->Matrix()));
+	glm::mat3 normalMat = glm::inverseTranspose(glm::mat3(*(transform->Matrix()) * *c->Matrix()));
 	glUniformMatrix3fv(activeShader->mat_normal, 1, GL_FALSE, (GLfloat*) &normalMat);
 
 	BindVertices();

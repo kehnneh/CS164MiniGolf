@@ -18,7 +18,7 @@ private:
 
 public:
 	Level()
-		: lightDir(glm::vec3(5.f, 10.f, 0.f)),
+		: lightDir(glm::vec3(-1.f, 1.f, -1.f)),
 		  ambientLight(glm::vec4(.2f, .2f, .2f, 1.f))
 	{}
 	~Level()

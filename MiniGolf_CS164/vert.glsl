@@ -24,11 +24,9 @@ out vec4 frag_color;
 void main() {
     mat4 modelView = camera * transform;
 
-	// Dynamically calculating the eye position may be a really bad idea.
-    // vec3 eye = -camera[3].xyz * mat3(camera);
-
     vec4 posT = modelView * vec4(pos, 1.0);
     
+	//L = normalize(L_p); //normalize(camera * vec4(L_p, 1.0)).xyz;
     L = normalize(modelView * vec4(L_p, 1.0)).xyz;
 
     V = (modelView * vec4(eye, 1.0)).xyz;
@@ -38,7 +36,6 @@ void main() {
     V = normalize(V - posT.xyz);
     
     frag_color = color;
-	//frag_color.rgb = vec3(1.0, 1.0, 1.0) * -posT.z;
     
 	ambientLight = ambient;
     gl_Position = proj * posT;

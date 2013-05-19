@@ -16,7 +16,12 @@ void Level::DeInit()
 
 void Level::Render(Camera* camera, Shader* shader)
 {	
-	glUniform4fv(shader->ambient, 1, (GLfloat*) &ambientLight);
+	for (std::vector<Renderable*>::iterator it = others.begin(); it != others.end(); ++it)
+	{
+		(*it)->Tick();
+	}
+
+  glUniform4fv(shader->ambient, 1, (GLfloat*) &ambientLight);
 	glUniform3fv(shader->sun, 1, (GLfloat*) &lightDir);
 
 	for (std::vector<Renderable*>::iterator it = tiles.begin(); it != tiles.end(); ++it)

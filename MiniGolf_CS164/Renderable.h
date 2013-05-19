@@ -4,6 +4,7 @@
 #include <glm\glm.hpp>
 #include <glm\gtc\type_ptr.hpp>
 #include <glm\gtx\transform.hpp>
+#include "MatrixObject.h"
 
 class Shader;
 class Camera;
@@ -11,13 +12,13 @@ class Camera;
 class Renderable
 {
 protected:
-	float scaleFactor;
-
 	unsigned int vertices, indices;
 
 	// The matrix doesn't do anything right now, since the vertices are hard coded. Vertices need to be abstracted such that
 	// the transform matrix represents the renderable's orientation. For tiles, the transform matrix should be the center of the tile
-	glm::mat4* transform;
+	//glm::mat4* transform;
+
+	MatrixObject *transform;
 
 	glm::vec4* colorData;
 	glm::vec3* vertexData;
@@ -39,7 +40,6 @@ public:
 	Renderable()
 		: vertices(0),
 		  indices(0),
-		  scaleFactor(1.f),
 		  drawMode(GL_TRIANGLES),
 		  transform(0),
 		  colorData(0),
@@ -54,6 +54,8 @@ public:
 	bool Init(glm::vec3* vertData, unsigned int numVerts);
 
 	void DeInit();
+
+  void Tick();
 
 	void Render(Camera* c);
 

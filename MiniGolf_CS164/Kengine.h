@@ -31,7 +31,8 @@ public:
 	Kengine() :
       shader(0),
 		  userInput(0),
-		  c(),
+#pragma warning( suppress: 4351 )
+      c(),
 		  level(0),
 		  activeCamera(0),
       _projection(0),
