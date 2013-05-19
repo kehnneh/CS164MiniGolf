@@ -19,14 +19,20 @@ public:
 	~MatrixObject()
 	{}
 
+  // Rotation getter
+  const glm::vec3 *Rotation() const;
+
   // Rotation setters
-  void Rotation(float x, float y, float z);
+  void Rotation(float pitch, float yaw, float roll);
   void Rotation(glm::vec3 rot);
   
   // Rotation incrementers
   void IncPitch(float degrees);
   void IncYaw(float degrees);
   void IncRoll(float degrees);
+
+  // Position getter
+  const glm::vec3 *Position() const;
 
   // Position setters
   void Position(float x, float y, float z);
@@ -38,9 +44,9 @@ public:
   void IncZ(float z);
   
   // Relative position incrementers
-  void MoveForward(float amt);
-  void MoveRight(float amt);
-  void MoveUp(float amt);
+  void MoveForward(float dist);
+  void MoveRight(float dist);
+  void MoveUp(float dist);
 
 	void Init();
 	void DeInit();

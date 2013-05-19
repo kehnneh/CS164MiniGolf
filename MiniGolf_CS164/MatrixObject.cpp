@@ -52,6 +52,25 @@ void IncrementDegrees(float& val, float degrees, float limit)
   }
 }
 
+const glm::vec3 *MatrixObject::Rotation() const
+{
+  return _rot;
+}
+
+void MatrixObject::Rotation(float pitch, float yaw, float roll)
+{
+  _rot->x = pitch;
+  _rot->y = yaw;
+  _rot->z = roll;
+  _updateFlags |= UPDATE_ROTATION;
+}
+
+void MatrixObject::Rotation(glm::vec3 rot)
+{
+  *_rot = rot;
+  _updateFlags |= UPDATE_ROTATION;
+}
+
 // Increments the Pitch (X-Rotation) by the specified amount in degrees, then
 // flags the matrix for updating
 void MatrixObject::IncPitch(float degrees)
@@ -76,6 +95,67 @@ void MatrixObject::IncRoll(float degrees)
 {
   IncrementDegreesWrap(_rot->z, degrees, 360.f);
 	_updateFlags |= UPDATE_ROTATION;
+}
+
+const glm::vec3 *MatrixObject::Position() const
+{
+  return _pos;
+}
+
+void MatrixObject::Position(float x, float y, float z)
+{
+  _pos->x = x;
+  _pos->y = y;
+  _pos->z = z;
+  _updateFlags |= UPDATE_POSITION;
+}
+
+void MatrixObject::Position(glm::vec3 pos)
+{
+  *_pos = pos;
+  _updateFlags |= UPDATE_POSITION;
+}
+
+void MatrixObject::IncX(float x)
+{
+  _pos->x += x;
+  _updateFlags |= UPDATE_POSITION;
+}
+
+void MatrixObject::IncY(float y)
+{
+  _pos->y += y;
+  _updateFlags |= UPDATE_POSITION;
+}
+
+void MatrixObject::IncZ(float z)
+{
+  _pos->z += z;
+  _updateFlags |= UPDATE_POSITION;
+}
+
+void MatrixObject::MoveForward(float dist)
+{
+  _pos->x += (*_mat)[0].z * dist;
+  _pos->y += (*_mat)[1].z * dist;
+  _pos->z += (*_mat)[2].z * dist;
+  _updateFlags |= UPDATE_POSITION;
+}
+
+void MatrixObject::MoveRight(float dist)
+{
+  _pos->x += (*_mat)[0].x * dist;
+  _pos->y += (*_mat)[1].x * dist;
+  _pos->z += (*_mat)[2].x * dist;
+  _updateFlags |= UPDATE_POSITION;
+}
+
+void MatrixObject::MoveUp(float dist)
+{
+  _pos->x += (*_mat)[0].y * dist;
+  _pos->y += (*_mat)[1].y * dist;
+  _pos->z += (*_mat)[2].y * dist;
+  _updateFlags |= UPDATE_POSITION;
 }
 
 void MatrixObject::Tick()
