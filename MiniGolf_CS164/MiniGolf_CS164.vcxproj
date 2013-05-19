@@ -92,6 +92,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="UserInput.cpp" />
+    <ClCompile Include="VertexObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArcballCamera.h" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="UserInput.h" />
+    <ClInclude Include="VertexObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Camera">
       <UniqueIdentifier>{7908276b-cf8e-4dc1-8c87-f253c05fe33f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Data Types">
+      <UniqueIdentifier>{fa0d5bdd-cd2d-40c8-8430-a6bbbeb617b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data Types">
+      <UniqueIdentifier>{27d34889-62d3-4ffc-a3c4-4551fafe1cb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -55,7 +61,10 @@
       <Filter>Source Files\Camera</Filter>
     </ClCompile>
     <ClCompile Include="MatrixObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Data Types</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexObject.cpp">
+      <Filter>Source Files\Data Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,7 +102,10 @@
       <Filter>Header Files\Camera</Filter>
     </ClInclude>
     <ClInclude Include="MatrixObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Data Types</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexObject.h">
+      <Filter>Header Files\Data Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

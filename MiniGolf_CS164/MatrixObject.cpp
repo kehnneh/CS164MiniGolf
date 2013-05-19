@@ -42,6 +42,7 @@ void IncrementDegreesWrap(float& val, float degrees, float limit)
 void IncrementDegrees(float& val, float degrees, float limit)
 {
   val += degrees;
+
   if (val > limit)
   {
     val = limit - 0.1f;
@@ -71,8 +72,6 @@ void MatrixObject::Rotation(glm::vec3 rot)
   _updateFlags |= UPDATE_ROTATION;
 }
 
-// Increments the Pitch (X-Rotation) by the specified amount in degrees, then
-// flags the matrix for updating
 void MatrixObject::IncPitch(float degrees)
 {
   // If this matrix is for a camera, prevent wrapping there
@@ -81,16 +80,12 @@ void MatrixObject::IncPitch(float degrees)
 	_updateFlags |= UPDATE_ROTATION;
 }
 
-// Increments the Yaw (Y-Rotation) by the specified amount in degrees, then
-// flags the matrix for updating
 void MatrixObject::IncYaw(float degrees)
 {
   IncrementDegreesWrap(_rot->y, degrees, 360.f);
 	_updateFlags |= UPDATE_ROTATION;
 }
 
-// Increments the Roll (Z-Rotation) by the specified amount in degrees, then
-// flags the matrix for updating
 void MatrixObject::IncRoll(float degrees)
 {
   IncrementDegreesWrap(_rot->z, degrees, 360.f);
@@ -175,4 +170,9 @@ void MatrixObject::Tick()
     *_mat = *_rotmat * *_posmat;
     _updateFlags = 0x0;
   }
+}
+
+const glm::mat4 *MatrixObject::Matrix() const
+{
+  return _mat;
 }

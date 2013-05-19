@@ -8,6 +8,7 @@ private:
 	glm::mat4 *_mat, *_rotmat, *_posmat;
 	glm::vec3 *_pos, *_rot;
 
+  // two-bit flag for updating _rotmat and _posmat
   unsigned char _updateFlags;
 
 public:
@@ -18,6 +19,11 @@ public:
 	{}
 	~MatrixObject()
 	{}
+
+  void Init();
+	void DeInit();
+
+  void Tick();
 
   // Rotation getter
   const glm::vec3 *Rotation() const;
@@ -48,9 +54,7 @@ public:
   void MoveRight(float dist);
   void MoveUp(float dist);
 
-	void Init();
-	void DeInit();
-
-  void Tick();
+  // Matrix getter
+  const glm::mat4 *Matrix() const;
 };
 
