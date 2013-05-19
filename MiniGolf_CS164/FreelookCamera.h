@@ -15,8 +15,11 @@ protected:
 
 public:
 	FreelookCamera()
-	{}
+	{ _eye.y -= 3.f; _eye.z += 3.f; _pitch *= -1.f; }
 	~FreelookCamera()
 	{}
+
+	void MoveLeft(float distance);
+	//void MoveForward(float distance);
 };
 

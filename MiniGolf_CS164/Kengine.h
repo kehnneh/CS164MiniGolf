@@ -16,18 +16,21 @@ private:
 	void InitCallbacks();
 
 public:
+	int activeCamera;
+
 	Shader *shader;
 
 	UserInput *userInput;
 	Projection *_projection;
-	Camera *c;
+	Camera *c[2];
 	Level *level;
 
 	Kengine()
 		: shader(0),
 		  userInput(0),
-		  c(0),
-		  level(0)
+		  c(),
+		  level(0),
+		  activeCamera(0)
 	{}
 	~Kengine()
 	{}

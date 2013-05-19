@@ -7,8 +7,6 @@ void ArcballCamera::RotateX()
 	*_mat = glm::rotate(*_mat, _pitch, _xaxis);
 }
 
-// Freelook can be achieved with:
-// *_mat = glm::rotate(_yaw, _yaxis) * *_mat;
 void ArcballCamera::RotateY()
 {
 	*_mat = glm::rotate(*_mat, _yaw, _yaxis);

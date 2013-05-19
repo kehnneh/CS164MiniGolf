@@ -115,7 +115,6 @@ void Camera::MoveForward(float distance)
 }
 
 // Translates along the Camera's x-axis
-// 'Right' in the lookAt matrix is actually defined as 'Left'
 void Camera::MoveLeft(float distance)
 {
 	_target.x += (*_mat)[0].x * distance;
