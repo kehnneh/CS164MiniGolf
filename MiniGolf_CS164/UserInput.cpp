@@ -47,11 +47,11 @@ void UserInput::Tick()
 	{
 		camera->IncYaw(1.f);
 	}
-	else if (IsKeyPressed('w'))
+	else if (IsKeyPressed('z'))
 	{
 		camera->IncPitch(-1.f);
 	}
-	else if (IsKeyPressed('s'))
+	else if (IsKeyPressed('x'))
 	{
 		camera->IncPitch(1.f);
 	}
@@ -65,11 +65,11 @@ void UserInput::Tick()
 	}
 	// Until the Camera moves along the World's X/Z plane, MoveForward is not going to work as desired
 	
-	else if (IsKeyPressed('z'))
+	else if (IsKeyPressed('w'))
 	{
 		camera->MoveForward(.25f);
 	}
-	else if (IsKeyPressed('x'))
+	else if (IsKeyPressed('s'))
 	{
 		camera->MoveForward(-.25f);
 	}
