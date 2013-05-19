@@ -6,6 +6,7 @@ class UserInput;
 class Shader;
 class Level;
 class Projection;
+class GameTimer;
 
 class Kengine
 {
@@ -18,6 +19,8 @@ private:
 public:
 	int activeCamera;
 
+  GameTimer *_timer;
+
 	Shader *shader;
 
 	UserInput *userInput;
@@ -25,12 +28,14 @@ public:
 	Camera *c[2];
 	Level *level;
 
-	Kengine()
-		: shader(0),
+	Kengine() :
+      shader(0),
 		  userInput(0),
 		  c(),
 		  level(0),
-		  activeCamera(0)
+		  activeCamera(0),
+      _projection(0),
+      _timer(0)
 	{}
 	~Kengine()
 	{}

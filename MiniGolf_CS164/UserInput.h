@@ -7,6 +7,7 @@ class UserInput
 private:
 	// External links to variables controlled via UserInput::Tick()
 	Camera* camera;
+  float _rotationSensitivity, _movementSensitivity;
 
 private:
 	// Internal data
@@ -16,7 +17,8 @@ public:
 	UserInput()
 		: camera(0),
 #pragma warning( suppress : 4351 )
-		  m_keys()
+		  m_keys(),
+      _rotationSensitivity(50.f), _movementSensitivity(5.f)
 	{}
 	~UserInput()
 	{}
@@ -28,7 +30,7 @@ public:
 	void PressKey(unsigned char key);
 	void ReleaseKey(unsigned char key);
 
-	void Tick();
+	void Tick(const double dt);
 
 	void Init();
 	void DeInit();

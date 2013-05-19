@@ -2,6 +2,7 @@
 
 #include "CommonUtils.h"
 
+#include <glm\gtc\quaternion.hpp>
 #include <glm\gtx\rotate_vector.hpp>
 
 void VertexObject::Init()
@@ -17,6 +18,16 @@ void VertexObject::DeInit()
 float VertexObject::Length() const
 {
   return glm::length(*_vert);
+}
+
+void VertexObject::Normalize()
+{
+  *_vert = glm::normalize(*_vert);
+}
+
+void VertexObject::Rotate(float pitch, float yaw, float roll)
+{
+  *_vert = glm::mat3_cast(glm::quat(glm::vec3(pitch, yaw, roll))) * *_vert;
 }
 
 void VertexObject::Increment(float x, float y, float z)

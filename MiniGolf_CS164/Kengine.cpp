@@ -7,6 +7,8 @@
 #include "Projection.h"
 #include "ArcballCamera.h"
 #include "FreelookCamera.h"
+#include "GameTimer.h"
+#include <gl\glfw.h>
 
 static Kengine *kengine = 0;
 
@@ -34,10 +36,11 @@ void display()
 
 void Tick(int value)
 {
+  double dt = kengine->_timer->TickTime();
 	kengine->_projection->Tick();
 
 	// Handle user input
-	kengine->userInput->Tick();
+	kengine->userInput->Tick(dt);
 	if (kengine->userInput->IsKeyPressed('c'))
 	{
 		if (kengine->activeCamera == 0)
@@ -56,7 +59,7 @@ void Tick(int value)
 
 	// Send new values to the shaders
 	glUniform3fv(kengine->shader->eye, 1, (GLfloat*) kengine->c[kengine->activeCamera]->GetPosition());
-	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->c[kengine->activeCamera]->Matrix());//kengine->camera->GetMatrix());
+	glUniformMatrix4fv(kengine->shader->mat_camera, 1, GL_FALSE, (GLfloat*) kengine->c[kengine->activeCamera]->Matrix());
 	glUniformMatrix4fv(kengine->shader->mat_projection, 1, GL_FALSE, (GLfloat*) kengine->_projection->Matrix());
 
 	glutPostRedisplay();
@@ -92,6 +95,12 @@ bool Kengine::Init(int argc, char** argv)
 	// Initialize GLUT and GLEW
 	InitGlut(argc, argv);
 
+  // Initialize glfw for its timer ;D
+  if (glfwInit() == GL_FALSE)
+  {
+    return false;
+  }
+
 	// TODO: Setup GLUI
 
 	glewInit();
@@ -122,6 +131,9 @@ bool Kengine::Init(int argc, char** argv)
 
 	level = new Level;
 	level->Init(argv[1]);
+
+  _timer = new GameTimer;
+  _timer->Init();
 
 	InitCallbacks();
 

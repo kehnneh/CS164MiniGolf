@@ -33,45 +33,46 @@ void UserInput::BindCamera(Camera* c)
 	camera = c;
 }
 
-void UserInput::Tick()
+void UserInput::Tick(const double dt)
 {
+  float t = (float) dt;
 	if (IsKeyPressed(27))
 	{
 		glutLeaveMainLoop();
 	}
 	else if (IsKeyPressed('q'))
 	{
-		camera->IncYaw(-1.f);
+		camera->IncYaw(-1.f * _rotationSensitivity * t);
 	}
 	else if (IsKeyPressed('e'))
 	{
-		camera->IncYaw(1.f);
+		camera->IncYaw(1.f * _rotationSensitivity * t);
 	}
 	else if (IsKeyPressed('z'))
 	{
-		camera->IncPitch(-1.f);
+		camera->IncPitch(-1.f * _rotationSensitivity * t);
 	}
 	else if (IsKeyPressed('x'))
 	{
-		camera->IncPitch(1.f);
+		camera->IncPitch(1.f * _rotationSensitivity * t);
 	}
 	else if (IsKeyPressed('a'))
 	{
-		camera->MoveLeft(-.25f);
+		camera->MoveLeft(-1.f * _movementSensitivity * t);
 	}
 	else if (IsKeyPressed('d'))
 	{
-		camera->MoveLeft(.25f);
+		camera->MoveLeft(1.f * _movementSensitivity * t);
 	}
 	// Until the Camera moves along the World's X/Z plane, MoveForward is not going to work as desired
 	
 	else if (IsKeyPressed('w'))
 	{
-		camera->MoveForward(.25f);
+		camera->MoveForward(1.f * _movementSensitivity * t);
 	}
 	else if (IsKeyPressed('s'))
 	{
-		camera->MoveForward(-.25f);
+		camera->MoveForward(-1.f * _movementSensitivity * t);
 	}
 	
 }

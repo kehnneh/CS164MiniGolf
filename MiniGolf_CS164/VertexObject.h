@@ -19,14 +19,18 @@ public:
 
   float Length() const;
 
-  // Rotate
-  
+  void Normalize();
 
+  // Rotate
+  void Rotate(float pitch, float yaw, float roll);
+
+  // Position Incrementers
   void Increment(float x, float y, float z);
   void IncX(float x);
   void IncY(float y);
   void IncZ(float z);
 
+  // Position Setters
   void Set(float x, float y, float z);
   const glm::vec3 *Vertex() const;
 };

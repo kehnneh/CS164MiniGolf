@@ -12,8 +12,8 @@ private:
   unsigned char _updateFlags;
 
 public:
-	MatrixObject()
-		: _mat(0), _posmat(0), _rotmat(0),
+	MatrixObject() :
+      _mat(0), _posmat(0), _rotmat(0),
       _pos(0), _rot(0),
       _updateFlags(0)
 	{}
