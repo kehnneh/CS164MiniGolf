@@ -35,3 +35,9 @@ void Golfball::Position(const glm::vec3 pos)
   _sphere->SetPosition(pos);
   _transform->Position(pos);
 }
+
+void Golfball::Scale(float uniform)
+{
+	_sphere->UniformScale(uniform);
+	_transform->Scale(uniform);
+}

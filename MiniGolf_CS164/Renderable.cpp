@@ -47,7 +47,7 @@ void Renderable::UniformScale(float factor)
 
 void Renderable::SetPosition(glm::vec3 pos)
 {
-  transform->Position(pos);
+	transform->Position(pos);
 }
 
 void Renderable::Tick()
@@ -157,7 +157,7 @@ bool Renderable::Init(char* filename)
 bool Renderable::Init(glm::vec3* vertData, unsigned int numVerts)
 {
 	transform = new MatrixObject;
-  transform->Init();
+	transform->Init();
 
 	vertices = numVerts;
 	vertexData = vertData;

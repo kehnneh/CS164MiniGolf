@@ -27,5 +27,6 @@ public:
 
   // Position Setter
   void Position(const glm::vec3 pos);
+  void Golfball::Scale(float uniform);
 };
 
