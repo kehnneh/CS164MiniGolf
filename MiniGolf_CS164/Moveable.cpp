@@ -23,12 +23,16 @@ void Moveable::Tick(double t)
   // Has the object changed tiles?
   if (_tile->IsOnTile(this))
   {
-    // - Yes:
-    //    + Update the _tile reference
+    // - No:
+    
 
   }
+  else
+  {
+    // - Yes:
+    //    + Update the _tile reference
+  }
   
-  // - No:
 }
 
 void Moveable::Impulse(float s)

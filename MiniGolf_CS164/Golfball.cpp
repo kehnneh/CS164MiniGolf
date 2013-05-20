@@ -9,6 +9,8 @@ bool Golfball::Init()
     return false;
   }
 
+  _sphere->GenerateColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
+
   _transform = new MatrixObject;
   _transform->Init();
 
@@ -24,6 +26,7 @@ void Golfball::Tick(double t)
 {
   Moveable::Tick(t);
   
+  // If _tile has
   // check if the ball went in the hole?
 }
 

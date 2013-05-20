@@ -171,6 +171,8 @@ bool Level::Init(std::string filename)
   {
     return false;
   }
+  _ball->Position(teePos + glm::vec3(0.f, 0.05f, 0.f));
+  _ball->Scale(0.05f);
 
 	Renderable *ball = new Renderable;
 	

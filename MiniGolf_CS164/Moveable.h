@@ -15,6 +15,7 @@ private:
   
   MatrixObject *transform;
 
+protected:
   //Hard-coded because it needs to know about the tile it's currently
   //residing on. Physics is relative to the virtual tile set created
   //by the application
