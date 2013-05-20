@@ -68,6 +68,8 @@ bool Tile::IsOnTile(const Moveable* m)
       return true;
     }
   }
+
+  return false;
 }
 
 void Tile::RenderBorders(Camera* c)
