@@ -122,9 +122,6 @@
     <None Include="Holes\hole.02.db" />
     <None Include="vert.glsl" />
   </ItemGroup>
-  <ItemGroup>
-    <Object Include="Models\golfball.obj" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
