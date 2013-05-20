@@ -59,17 +59,20 @@ void Tile::ComputeSlope(const glm::vec3 up)
 
 bool Tile::IsOnTile(const Moveable* m)
 {
-  glm::vec3 something;
+  bool result = false;
+  const glm::vec3* pos = m->Position();
+
   glm::vec3 down(0.f, -1.f, 0.f);
   for (unsigned int i = 0; i < indices; i += 3)
   {
-    if (glm::intersectRayTriangle(*m->Position(), down, vertexData[i], vertexData[i + 1], vertexData[i + 2], something))
+    glm::vec3 something;
+    if (glm::intersectLineTriangle(*pos, down, vertexData[indexData[i]], vertexData[indexData[i + 1]], vertexData[indexData[i + 2]], something))
     {
-      return true;
+      result = true;
     }
   }
 
-  return false;
+  return result;
 }
 
 void Tile::RenderBorders(Camera* c)

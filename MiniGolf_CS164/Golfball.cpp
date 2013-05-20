@@ -14,8 +14,6 @@ bool Golfball::Init()
   _sphere->GenerateColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
 
   BindMatrix(_sphere->Matrix());
-  //_transform = new MatrixObject;
-  //_transform->Init();
 
   return true;
 }
