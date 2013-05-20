@@ -24,6 +24,7 @@ public:
   void DeInit();
 
   void Tick(double t);
+  void Render(Camera *camera);
 
   // Position Setter
   void Position(const glm::vec3 pos);

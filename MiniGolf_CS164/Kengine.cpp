@@ -27,9 +27,14 @@ void display()
 {
 	glViewport(0, 0, 640, 480);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  // Draw all 3D-placed objects
 	glEnable(GL_DEPTH_TEST);
 
 	kengine->level->Render(kengine->c[kengine->activeCamera], kengine->shader);
+
+  // Time to draw the HUD!
+  glDisable(GL_DEPTH_TEST);
 
 	glutSwapBuffers();
 }

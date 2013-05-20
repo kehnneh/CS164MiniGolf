@@ -3,6 +3,8 @@
 
 bool Golfball::Init()
 {
+  Moveable::Init();
+
   _sphere = new Renderable();
   if (!_sphere->Init("Models/golfball.obj"))
   {
@@ -23,8 +25,14 @@ void Golfball::DeInit()
   SAFE_DELETE(_sphere);
 }
 
+void Golfball::Render(Camera* camera)
+{
+  _sphere->Render(camera);
+}
+
 void Golfball::Tick(double t)
 {
+  _sphere->Matrix()->Tick();
   Moveable::Tick(t);
   
   // If _tile has

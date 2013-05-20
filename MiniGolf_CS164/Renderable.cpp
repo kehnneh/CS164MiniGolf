@@ -22,12 +22,17 @@ void Renderable::DeInit()
 	SAFE_DELETE(transform);
 }
 
+MatrixObject *Renderable::Matrix() const
+{
+  return transform;
+}
+
 void Renderable::BindShader(Shader* shader)
 {
 	activeShader = shader;
 }
 
-void Renderable::GenerateColor(glm::vec4 colorStored)
+void Renderable::GenerateColor(glm::vec4 const & colorStored)
 {
 	colorData = new glm::vec4[vertices];
 

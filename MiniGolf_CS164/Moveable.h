@@ -38,6 +38,8 @@ public:
 
   void Impulse(float s);
 
+  void SetTile(Tile * t);
+
   const glm::vec3 *Position() const;
 
   void BindMatrix(MatrixObject *m);

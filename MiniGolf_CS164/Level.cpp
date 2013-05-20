@@ -21,6 +21,9 @@ void Level::Render(Camera* camera, Shader* shader)
 		(*it)->Tick();
 	}
 
+  _ball->Tick(0.0);
+  _ball->Render(camera);
+
   glUniform4fv(shader->ambient, 1, (GLfloat*) &ambientLight);
 	glUniform3fv(shader->sun, 1, (GLfloat*) &lightDir);
 
@@ -173,19 +176,7 @@ bool Level::Init(std::string filename)
   }
   _ball->Position(teePos + glm::vec3(0.f, 0.05f, 0.f));
   _ball->Scale(0.05f);
-
-	Renderable *ball = new Renderable;
-	
-	if (!ball->Init("Models/golfball.obj"))
-	{
-		return false;
-	}
-
-	others.push_back(ball);
-
-	ball->SetPosition(glm::vec3(teePos.x, teePos.y + 0.05, teePos.z));
-	ball->UniformScale(0.05f);
-	ball->GenerateColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
+  _ball->SetTile((Tile *)tiles[teeId]);
 
 	return true;
 }

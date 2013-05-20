@@ -18,6 +18,11 @@ void Moveable::DeInit()
   SAFE_DELETE(_velocity);
 }
 
+void Moveable::SetTile(Tile * t)
+{
+  _tile = t;
+}
+
 void Moveable::Tick(double t)
 {
   // Has the object changed tiles?
