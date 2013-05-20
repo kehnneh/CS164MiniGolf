@@ -45,6 +45,13 @@ void Tile::Finalize()
 			borders.push_back(r);
 		}
 	}
+
+  ComputeSlope(glm::vec3(0.f, 1.f, 0.f));
+}
+
+void Tile::ComputeSlope(const glm::vec3 up)
+{
+
 }
 
 void Tile::RenderBorders(Camera* c)

@@ -115,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="frag.glsl" />
+    <None Include="Holes\hole.00.db" />
+    <None Include="Holes\hole.01.db" />
+    <None Include="Holes\hole.02.db" />
     <None Include="vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

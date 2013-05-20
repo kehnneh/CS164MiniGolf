@@ -7,8 +7,16 @@
 
 class Camera;
 
+// use glm::intersectRayTriangle to determine if the ball has left the tile
+// DO NOT USE BOUNDS, Tiles are NOT guaranteed to be rectangular shapes!
+
 class Tile : public Renderable
 {
+private:
+  glm::vec3 *_slope;
+
+  void ComputeSlope(const glm::vec3 up);
+
 protected:
 	unsigned short edges;
 	unsigned short* neighbors;
@@ -20,16 +28,20 @@ protected:
 public:
 	unsigned int tileId;
 
-	Tile()
-		: tileId(0),
+	Tile() :
+      tileId(0),
 		  edges(0),
-		  neighbors(0)
+		  neighbors(0),
+      _slope(0)
 	{}
-	Tile(unsigned short Id)
-		: tileId(Id),
+
+	Tile(unsigned short Id) :
+      tileId(Id),
 		  edges(0),
-		  neighbors(0)
+		  neighbors(0),
+      _slope(0)
 	{}
+
 	~Tile()
 	{}
 

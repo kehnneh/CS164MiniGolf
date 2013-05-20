@@ -34,11 +34,14 @@
     <Filter Include="Source Files\Shaders">
       <UniqueIdentifier>{f7ef5394-34f5-43c3-af85-564afe80467c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Shaders\GLSL">
-      <UniqueIdentifier>{4e6549e2-08f5-40c3-8d47-815e50b03dd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Shaders">
       <UniqueIdentifier>{37a3772d-bacb-4bc1-84b5-cb658d30c19a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Levels">
+      <UniqueIdentifier>{0e8f8cb3-8541-4d82-bd4d-cd480a319506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\GLSL">
+      <UniqueIdentifier>{4e6549e2-08f5-40c3-8d47-815e50b03dd1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -137,10 +140,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="frag.glsl">
-      <Filter>Source Files\Shaders\GLSL</Filter>
+      <Filter>Resource Files\GLSL</Filter>
     </None>
     <None Include="vert.glsl">
-      <Filter>Source Files\Shaders\GLSL</Filter>
+      <Filter>Resource Files\GLSL</Filter>
+    </None>
+    <None Include="Holes\hole.00.db">
+      <Filter>Resource Files\Levels</Filter>
+    </None>
+    <None Include="Holes\hole.01.db">
+      <Filter>Resource Files\Levels</Filter>
+    </None>
+    <None Include="Holes\hole.02.db">
+      <Filter>Resource Files\Levels</Filter>
     </None>
   </ItemGroup>
 </Project>
