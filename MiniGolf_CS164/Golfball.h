@@ -8,13 +8,13 @@ class Golfball : public Moveable
 {
 private:
   Renderable *_sphere;
-  MatrixObject *_transform;
 
   float _radius;
 
 public:
   Golfball() :
-      _sphere(0), _transform(0), _radius(0.f)
+      _sphere(0),
+      _radius(0.f)
   {}
 
   ~Golfball()
@@ -27,6 +27,11 @@ public:
 
   // Position Setter
   void Position(const glm::vec3 pos);
-  void Golfball::Scale(float uniform);
+
+  // Scale Setter
+  void Scale(float uniform);
+
+  // Rotation Setter
+  void Rotation(const glm::vec3 eulerAngles);
 };
 

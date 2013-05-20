@@ -50,6 +50,11 @@ void Renderable::SetPosition(glm::vec3 pos)
 	transform->Position(pos);
 }
 
+void Renderable::Rotation(glm::vec3 eulerAngles)
+{
+  transform->Rotation(eulerAngles);
+}
+
 void Renderable::Tick()
 {
   transform->Tick();

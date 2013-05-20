@@ -35,6 +35,11 @@ void Moveable::Tick(double t)
   
 }
 
+void Moveable::BindMatrix(MatrixObject *m)
+{
+  transform = m;
+}
+
 void Moveable::Impulse(float s)
 {
   _speed = s;

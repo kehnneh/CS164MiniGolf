@@ -61,8 +61,11 @@ public:
 
 	void UniformScale(float factor);
 	void SetPosition(glm::vec3 pos);
+  void Rotation(glm::vec3 eulerAngles);
 
 	virtual void GenerateColor(glm::vec4 colorStored);
 	
 	static void BindShader(Shader* s);
+
+  const MatrixObject *Matrix() const;
 };

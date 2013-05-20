@@ -39,5 +39,7 @@ public:
   void Impulse(float s);
 
   const glm::vec3 *Position() const;
+
+  void BindMatrix(MatrixObject *m);
 };
 

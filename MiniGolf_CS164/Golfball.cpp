@@ -11,8 +11,9 @@ bool Golfball::Init()
 
   _sphere->GenerateColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
 
-  _transform = new MatrixObject;
-  _transform->Init();
+  BindMatrix(_sphere->Matrix());
+  //_transform = new MatrixObject;
+  //_transform->Init();
 
   return true;
 }
@@ -33,11 +34,14 @@ void Golfball::Tick(double t)
 void Golfball::Position(const glm::vec3 pos)
 {
   _sphere->SetPosition(pos);
-  _transform->Position(pos);
 }
 
 void Golfball::Scale(float uniform)
 {
 	_sphere->UniformScale(uniform);
-	_transform->Scale(uniform);
+}
+
+void Golfball::Rotation(const glm::vec3 eulerAngles)
+{
+  _sphere->Rotation(eulerAngles);
 }
