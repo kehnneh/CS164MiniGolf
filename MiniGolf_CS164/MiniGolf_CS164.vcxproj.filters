@@ -43,6 +43,9 @@
     <Filter Include="Resource Files\GLSL">
       <UniqueIdentifier>{4e6549e2-08f5-40c3-8d47-815e50b03dd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Models">
+      <UniqueIdentifier>{09ad28e6-2d00-4a8b-9e82-c424831888a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -88,6 +91,9 @@
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
     <ClCompile Include="Moveable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Golfball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -137,6 +143,9 @@
     <ClInclude Include="Moveable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Golfball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="frag.glsl">
@@ -154,5 +163,10 @@
     <None Include="Holes\hole.02.db">
       <Filter>Resource Files\Levels</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Models\golfball.obj">
+      <Filter>Resource Files\Models</Filter>
+    </Object>
   </ItemGroup>
 </Project>

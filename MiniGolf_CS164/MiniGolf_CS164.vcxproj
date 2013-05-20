@@ -84,6 +84,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FreelookCamera.cpp" />
     <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="Golfball.cpp" />
     <ClCompile Include="Kengine.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="CommonUtils.h" />
     <ClInclude Include="FreelookCamera.h" />
     <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="Golfball.h" />
     <ClInclude Include="Kengine.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MatrixObject.h" />
@@ -119,6 +121,9 @@
     <None Include="Holes\hole.01.db" />
     <None Include="Holes\hole.02.db" />
     <None Include="vert.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Models\golfball.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

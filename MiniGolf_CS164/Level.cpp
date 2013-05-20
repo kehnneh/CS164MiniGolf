@@ -165,6 +165,13 @@ bool Level::Init(std::string filename)
 	fin.close();
 
 	// Load the golf ball!
+  _ball = new Golfball;
+  
+  if (!_ball->Init())
+  {
+    return false;
+  }
+
 	Renderable *ball = new Renderable;
 	
 	if (!ball->Init("Models/golfball.obj"))
