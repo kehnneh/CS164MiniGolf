@@ -2,6 +2,7 @@
 
 #include <glm\glm.hpp>
 #include "Renderable.h"
+#include "Moveable.h"
 
 #include <vector>
 
@@ -53,5 +54,7 @@ public:
 
 	void Finalize();
 	void RenderBorders(Camera* c);
+
+  bool IsOnTile(const Moveable* m);
 };
 

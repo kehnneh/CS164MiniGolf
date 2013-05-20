@@ -2,6 +2,7 @@
 
 #include <glm\glm.hpp>
 
+class MatrixObject;
 class Tile;
 
 class Moveable
@@ -12,6 +13,8 @@ private:
 	glm::vec3 *_velocity;
   float _speed;
   
+  MatrixObject *transform;
+
   //Hard-coded because it needs to know about the tile it's currently
   //residing on. Physics is relative to the virtual tile set created
   //by the application
@@ -33,5 +36,7 @@ public:
   void Tick(double t);
 
   void Impulse(float s);
+
+  const glm::vec3 *Position() const;
 };
 

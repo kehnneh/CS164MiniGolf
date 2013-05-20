@@ -1,10 +1,13 @@
 #include "Tile.h"
 #include "Renderable.h"
 
+#include <glm\gtx\intersect.hpp>
+
 void Tile::TileInit()
 {
 	edges = vertices;
 	neighbors = new unsigned short[vertices];
+  _slope = new glm::vec3;
 }
 
 bool Tile::SetNeighbor(unsigned short edgeId, unsigned short neighborTileId)
@@ -51,7 +54,20 @@ void Tile::Finalize()
 
 void Tile::ComputeSlope(const glm::vec3 up)
 {
+  *_slope = glm::normalize(glm::cross(normalData[0], glm::cross(up, normalData[0])));
+}
 
+bool Tile::IsOnTile(const Moveable* m)
+{
+  glm::vec3 something;
+  glm::vec3 down(0.f, -1.f, 0.f);
+  for (unsigned int i = 0; i < indices; i += 3)
+  {
+    if (glm::intersectRayTriangle(*m->Position(), down, vertexData[i], vertexData[i + 1], vertexData[i + 2], something))
+    {
+      return true;
+    }
+  }
 }
 
 void Tile::RenderBorders(Camera* c)
