@@ -64,20 +64,21 @@ void Tile::ComputeSlope(const glm::vec3 up)
   }
 }
 
-char DeterminePosition(glm::vec3 norm, glm::vec3 pos)
+// This assumes that the normal of the tile is the same for every
+// triangle in the tile
+glm::vec3 *Tile::Normal() const
 {
-  float p = glm::dot(norm, pos);
+  return &normalData[0];
+}
 
-  if (p > 0.f)
-  {
-    return 0x1;
-  }
-  else if (p < 0.f)
-  {
-    return 0x2;
-  }
+glm::vec3 *Tile::FirstVertex(unsigned int tri) const
+{
+  return &vertexData[tri * 3];
+}
 
-  return 0x4;
+unsigned int Tile::TriangleCount() const
+{
+  return indices / 3;
 }
 
 // Move this into the renderable bro. check to see if it collides

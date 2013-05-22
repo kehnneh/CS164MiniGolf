@@ -21,6 +21,8 @@ protected:
   //by the application
   Tile* _tile;
 
+  char IsOnTile();
+
 public:
 	Moveable() :
 	  _velocity(0),

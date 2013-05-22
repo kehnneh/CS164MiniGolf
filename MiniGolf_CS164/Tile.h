@@ -55,6 +55,10 @@ public:
 	void Finalize();
 	void RenderBorders(Camera* c);
 
+  glm::vec3 *Normal() const;
+  glm::vec3 *FirstVertex(unsigned int tri) const;
+  unsigned int Tile::TriangleCount() const;
+
   bool IsOnTile(const Moveable* m);
 };
 
