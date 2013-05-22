@@ -62,7 +62,7 @@ bool Tile::IsOnTile(const Moveable* m)
   bool result = false;
   const glm::vec3* pos = m->Position();
 
-  glm::vec3 down(0.f, -1.f, 0.f);
+  glm::vec3 down(0.f, 1.f, 0.f);
   for (unsigned int i = 0; i < indices; i += 3)
   {
     glm::vec3 something;
