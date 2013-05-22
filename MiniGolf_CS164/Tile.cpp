@@ -7,7 +7,7 @@ void Tile::TileInit()
 {
 	edges = vertices;
 	neighbors = new unsigned short[vertices];
-  _slope = new glm::vec3;
+  _slope = new glm::vec3(0.f, 0.f, 0.f);
 }
 
 bool Tile::SetNeighbor(unsigned short edgeId, unsigned short neighborTileId)
@@ -54,22 +54,50 @@ void Tile::Finalize()
 
 void Tile::ComputeSlope(const glm::vec3 up)
 {
-  *_slope = glm::normalize(glm::cross(normalData[0], glm::cross(up, normalData[0])));
+  if (up == normalData[0])
+  {
+    *_slope = glm::vec3(1.f, 0.f, 0.f);
+  }
+  else
+  {
+    *_slope = glm::normalize(glm::cross(normalData[0], glm::cross(up, normalData[0])));
+  }
 }
 
+char DeterminePosition(glm::vec3 norm, glm::vec3 pos)
+{
+  float p = glm::dot(norm, pos);
+
+  if (p > 0.f)
+  {
+    return 0x1;
+  }
+  else if (p < 0.f)
+  {
+    return 0x2;
+  }
+
+  return 0x4;
+}
+
+// Move this into the renderable bro. check to see if it collides
+// with the floor of the tile. if it doesnt: figure out which imaginary
+// bound it has crossed and change tiles accordingly.
+// with imaginary bounds of the tile, real bounds of the tile,
 bool Tile::IsOnTile(const Moveable* m)
 {
   bool result = false;
-  const glm::vec3* pos = m->Position();
+  glm::vec3 pos = *m->Position();
+  float d = 0.f;
 
   glm::vec3 down(0.f, 1.f, 0.f);
   for (unsigned int i = 0; i < indices; i += 3)
   {
-    glm::vec3 something;
-    if (glm::intersectLineTriangle(*pos, down, vertexData[indexData[i]], vertexData[indexData[i + 1]], vertexData[indexData[i + 2]], something))
-    {
-      result = true;
-    }
+    glm::vec3* norm = &normalData[indexData[i]];
+    float d = -glm::dot(vertexData[indexData[i]], *norm);
+    
+    char posLoc = DeterminePosition(*norm, pos);//,
+    //     destLoc = DeterminePosition(*norm, ;
   }
 
   return result;

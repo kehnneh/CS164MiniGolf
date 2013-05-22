@@ -26,6 +26,7 @@ void Moveable::SetTile(Tile * t)
 void Moveable::Tick(double t)
 {
   // Has the object changed tiles?
+  // if (speed != 0.f) {
   if (_tile->IsOnTile(this))
   {
     // - No:
@@ -37,6 +38,7 @@ void Moveable::Tick(double t)
     // - Yes:
     //    + Update the _tile reference
   }
+  // }
   
 }
 

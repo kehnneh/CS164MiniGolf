@@ -236,7 +236,7 @@ void Renderable::GenerateNormals()
 
 	for (unsigned int i = 0; i < vertices; i++)
 	{
-		glm::normalize(normalData[i]);
+		normalData[i] = glm::normalize(normalData[i]);
 	}
 }
 
