@@ -52,24 +52,24 @@ char Moveable::IsOnTile()
          destLoc = DeterminePosition(*norm, *pos + (_speed * *_velocity));
   }
 
+  return 0x0;
 }
 
 void Moveable::Tick(double t)
 {
-  // Has the object changed tiles?
-  // if (speed != 0.f) {
+  // Will the object collide with any borders?
+  // - Check real borders first:
+  //   + Ball needs to bounce off of them
+  // - Check imaginary borders second:
+  //   + Readjust ball's velocity based on the new tile's slope
   if (IsOnTile())
   {
-    // - No:
-    
 
   }
   else
   {
-    // - Yes:
-    //    + Update the _tile reference
+
   }
-  // }
   
 }
 

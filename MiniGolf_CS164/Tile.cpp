@@ -85,24 +85,6 @@ unsigned int Tile::TriangleCount() const
 // with the floor of the tile. if it doesnt: figure out which imaginary
 // bound it has crossed and change tiles accordingly.
 // with imaginary bounds of the tile, real bounds of the tile,
-bool Tile::IsOnTile(const Moveable* m)
-{
-  bool result = false;
-  glm::vec3 pos = *m->Position();
-  float d = 0.f;
-
-  glm::vec3 down(0.f, 1.f, 0.f);
-  for (unsigned int i = 0; i < indices; i += 3)
-  {
-    glm::vec3* norm = &normalData[indexData[i]];
-    float d = -glm::dot(vertexData[indexData[i]], *norm);
-    
-    char posLoc = DeterminePosition(*norm, pos);//,
-    //     destLoc = DeterminePosition(*norm, ;
-  }
-
-  return result;
-}
 
 void Tile::RenderBorders(Camera* c)
 {

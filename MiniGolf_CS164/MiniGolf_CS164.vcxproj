@@ -89,6 +89,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatrixObject.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Renderable.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Kengine.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MatrixObject.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="Renderable.h" />
