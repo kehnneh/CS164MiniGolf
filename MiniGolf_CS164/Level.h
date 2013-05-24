@@ -13,11 +13,12 @@ class Level
 private:
 	std::vector<Renderable*> tiles;
 	std::vector<Renderable*> others;
-	unsigned short teeId, cupId;
+	std::string hole_name, hole_name2, hole_name3, course_name;
+	unsigned short teeId, cupId, holeAmt, par_val;
 	glm::vec3 teePos, cupPos, lightDir;
 	glm::vec4 ambientLight;
 
-  Golfball *_ball;
+	Golfball *_ball;
 
 public:
 	Level()

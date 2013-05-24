@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="frag.glsl" />
+    <None Include="Holes\course.db" />
     <None Include="Holes\hole.00.db" />
     <None Include="Holes\hole.01.db" />
     <None Include="Holes\hole.02.db" />

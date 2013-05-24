@@ -44,6 +44,7 @@ bool Level::Init(std::string filename)
 	std::ifstream fin(filename.c_str());
 	char c;
 	unsigned short id, edges;
+	std::string temp ("tile");
 
 	if(fin.fail()) {
 		// Log failure to open file
@@ -54,6 +55,55 @@ bool Level::Init(std::string filename)
 
 	while(!fin.eof())
 	{
+		if(c == 'b') // If we read in 'begin_hole'
+		{
+			fin.get(c);
+			if(c == 'e')
+			{
+				fin.get(c);
+				if(c == 'g')
+				{
+					fin.get(c);	fin.get(c); //chomp 'in'
+					fin.get(c); //chomp '_'
+					fin.get(c); fin.get(c); fin.get(c); fin.get(c); // chomp 'hole'
+
+					//
+					// Send boolean to begin hole (game)
+					//
+
+					fin.get(c);
+				}
+			}
+		}
+		else
+		// If we read in 'name'
+		if(c == 'n')
+		{
+			fin.get(c);
+
+			if(c == 'a')
+			{
+				fin.get(c); fin.get(c); // chomp 'me'
+				fin.get(c);
+				std::cout << c << std::endl;
+
+				fin.get(c);
+
+				if(c == '\"')
+				{
+					fin >> hole_name >> hole_name2;
+					std::cout << hole_name2 << std::endl;
+
+					if(hole_name2.compare(temp) != 0)
+					{
+						std::cout << "name: " + hole_name + " " + hole_name2 << std::endl;
+					}
+
+					fin.get(c);
+				}
+			}
+		}
+		else
 		// If we read in 't'...
 		if(c == 't')
 		{
@@ -129,39 +179,80 @@ bool Level::Init(std::string filename)
 				others.push_back(r);
 			} 
 		} // End 't' 
-		else if (c == 'c') // If we read in 'cup'...
+		else if (c == 'c') //If we read in 'c'
 		{ 
-			fin.get(c); fin.get(c); // Chomp the 'up'
-			fin >> cupId >> cupPos.x >> cupPos.y >> cupPos.z;
+			fin.get(c);
 
-			Renderable* r = new Renderable;
-			glm::vec3* vertData = new glm::vec3[4];
-
-			vertData[3].x = cupPos.x + 0.1f;
-			vertData[3].y = cupPos.y + 0.01f;
-			vertData[3].z = cupPos.z + 0.1f;
-
-			vertData[2].x = cupPos.x - 0.1f;
-			vertData[2].y = cupPos.y + 0.01f;
-			vertData[2].z = cupPos.z + 0.1f;
-
-			vertData[1].x = cupPos.x - 0.1f;
-			vertData[1].y = cupPos.y + 0.01f;
-			vertData[1].z = cupPos.z - 0.1f;
-
-			vertData[0].x = cupPos.x + 0.1f;
-			vertData[0].y = cupPos.y + 0.01f;
-			vertData[0].z = cupPos.z - 0.1f;
-
-			if (!r->Init(vertData, 4))
+			// If we read in 'course'
+			if(c == 'o')
 			{
-				// log error
-				return false;
-			}
+				fin.get(c);	fin.get(c); fin.get(c); fin.get(c); // Chomp 'urse'
+			
+				fin.get(c);
 
-			r->GenerateColor(glm::vec4(.0f, .0f, .0f, 1.f));
-			others.push_back(r);
-		} // End 'cup'
+				fin >> course_name;
+				std::cout << course_name << std::endl;
+
+				fin >> holeAmt;
+				std::cout << holeAmt << std::endl;
+
+			} // End 'course'
+			else
+			//If we read in 'cup'
+			if(c == 'u')
+			{
+				fin.get(c); // Chomp the 'up'
+				fin >> cupId >> cupPos.x >> cupPos.y >> cupPos.z;
+
+				Renderable* r = new Renderable;
+				glm::vec3* vertData = new glm::vec3[4];
+
+				vertData[3].x = cupPos.x + 0.1f;
+				vertData[3].y = cupPos.y + 0.01f;
+				vertData[3].z = cupPos.z + 0.1f;
+
+				vertData[2].x = cupPos.x - 0.1f;
+				vertData[2].y = cupPos.y + 0.01f;
+				vertData[2].z = cupPos.z + 0.1f;
+
+				vertData[1].x = cupPos.x - 0.1f;
+				vertData[1].y = cupPos.y + 0.01f;
+				vertData[1].z = cupPos.z - 0.1f;
+
+				vertData[0].x = cupPos.x + 0.1f;
+				vertData[0].y = cupPos.y + 0.01f;
+				vertData[0].z = cupPos.z - 0.1f;
+
+				if (!r->Init(vertData, 4))
+				{
+					// log error
+					return false;
+				}
+
+				r->GenerateColor(glm::vec4(.0f, .0f, .0f, 1.f));
+				others.push_back(r);
+			} // End 'cup'
+		} // End 'c'
+		else 
+		// If we read in 'p'...
+		if (c == 'p') 
+		{
+			fin.get(c); fin.get(c); //chomp 'ar'
+			fin >> par_val;
+		} // End 'p'
+		else
+		// If we read in 'e'...
+		if (c == 'e')
+		{
+			fin.get(c);
+			if(c == 'n')
+			{
+				fin.get(c); //chomp 'd'
+				fin.get(c); // chomp '_'
+				fin.get(c); fin.get(c); fin.get(c); fin.get(c); // chomp 'hole'
+			}
+		}
+
 		fin.get(c);
 	}
 

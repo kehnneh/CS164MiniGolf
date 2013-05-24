@@ -5,6 +5,7 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <glm\gtx\transform.hpp>
 #include "MatrixObject.h"
+#include "Moveable.h"
 
 class Shader;
 class Camera;
@@ -52,20 +53,21 @@ public:
 
 	bool Init(char* filename);
 	bool Init(glm::vec3* vertData, unsigned int numVerts);
+	bool IsOnTile(const Moveable* m);
 
 	void DeInit();
 
-  void Tick();
+	void Tick();
 
 	void Render(Camera* c);
 
 	void UniformScale(float factor);
 	void SetPosition(glm::vec3 pos);
-  void Rotation(glm::vec3 eulerAngles);
+	void Rotation(glm::vec3 eulerAngles);
 
 	virtual void GenerateColor(glm::vec4 const & colorStored);
 	
 	static void BindShader(Shader* s);
 
-  MatrixObject *Matrix() const;
+	MatrixObject *Matrix() const;
 };

@@ -7,7 +7,7 @@ void Tile::TileInit()
 {
 	edges = vertices;
 	neighbors = new unsigned short[vertices];
-  _slope = new glm::vec3(0.f, 0.f, 0.f);
+	_slope = new glm::vec3(0.f, 0.f, 0.f);
 }
 
 bool Tile::SetNeighbor(unsigned short edgeId, unsigned short neighborTileId)
@@ -64,7 +64,7 @@ void Tile::ComputeSlope(const glm::vec3 up)
   }
 }
 
-char DeterminePosition(glm::vec3 norm, glm::vec3 pos)
+char Tile::DeterminePosition(glm::vec3 norm, glm::vec3 pos)
 {
   float p = glm::dot(norm, pos);
 
@@ -84,6 +84,7 @@ char DeterminePosition(glm::vec3 norm, glm::vec3 pos)
 // with the floor of the tile. if it doesnt: figure out which imaginary
 // bound it has crossed and change tiles accordingly.
 // with imaginary bounds of the tile, real bounds of the tile,
+/*
 bool Tile::IsOnTile(const Moveable* m)
 {
   bool result = false;
@@ -102,6 +103,7 @@ bool Tile::IsOnTile(const Moveable* m)
 
   return result;
 }
+*/
 
 void Tile::RenderBorders(Camera* c)
 {

@@ -55,6 +55,6 @@ public:
 	void Finalize();
 	void RenderBorders(Camera* c);
 
-  bool IsOnTile(const Moveable* m);
+	char DeterminePosition(glm::vec3 norm, glm::vec3 pos);
 };
 

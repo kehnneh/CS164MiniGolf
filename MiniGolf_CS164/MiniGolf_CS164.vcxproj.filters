@@ -160,5 +160,8 @@
     <None Include="Holes\hole.02.db">
       <Filter>Resource Files\Levels</Filter>
     </None>
+    <None Include="Holes\course.db">
+      <Filter>Resource Files\Levels</Filter>
+    </None>
   </ItemGroup>
 </Project>

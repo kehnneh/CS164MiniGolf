@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "CommonUtils.h"
 #include "Camera.h"
+#include "Tile.h"
 
 #include <glm\gtx\normal.hpp>
 #include <glm\gtc\matrix_inverse.hpp>
@@ -18,7 +19,7 @@ void Renderable::DeInit()
 	SAFE_DELETE(indexData);
 	SAFE_DELETE(colorData);
 	SAFE_DELETE(vertexData);
-  transform->DeInit();
+	transform->DeInit();
 	SAFE_DELETE(transform);
 }
 
@@ -101,7 +102,7 @@ bool FileCount(char* filename, unsigned int& vertices, unsigned int& indices)
 bool Renderable::Init(char* filename)
 {
 	transform = new MatrixObject;
-  transform->Init();
+	transform->Init();
 
 	if (!FileCount(filename, vertices, indices))
 	{
@@ -238,6 +239,33 @@ void Renderable::GenerateNormals()
 	{
 		normalData[i] = glm::normalize(normalData[i]);
 	}
+}
+
+//
+// "Move this into the renderable bro. check to see if it collides
+// with the floor of the tile. if it doesnt: figure out which imaginary
+// bound it has crossed and change tiles accordingly.
+// with imaginary bounds of the tile, real bounds of the tile."
+//
+bool Renderable::IsOnTile(const Moveable* m)
+{
+  Tile *tile = new Tile();
+
+  bool result = false;
+  glm::vec3 pos = *m->Position();
+  float d = 0.f;
+
+  glm::vec3 down(0.f, 1.f, 0.f);
+  for (unsigned int i = 0; i < indices; i += 3)
+  {
+    glm::vec3* norm = &normalData[indexData[i]];
+    float d = -glm::dot(vertexData[indexData[i]], *norm);
+    
+    char posLoc = tile->DeterminePosition(*norm, pos);//,
+    //     destLoc = DeterminePosition(*norm, ;
+  }
+
+  return result;
 }
 
 void Renderable::BindVertices()
